@@ -13,9 +13,17 @@
     </head>
     <body>
         <h1>Patient Search</h1>
-        One patient searches for another patient by any combination of alias, province and
+        <form method="post" action="PatientSearchServlet">
+            <p>
+            ID: <input type="text" name="patientID" size="20" autofocus><br/>
+            Province: <input type="text" name="patientProvince" size="20"><br/>
+            City: <input type="text" name="patientCity" size="20">
+            <p> 
+            <input type="submit">
+        </form>
+        <%--One patient searches for another patient by any combination of alias, province and
 city. For each patient returned the interface shows the alias and home address, the number of reviews
 written by that patient, and the date of the last review. A link is presented to add the patient as a
-friend.
+friend. --%>
     </body>
 </html>
