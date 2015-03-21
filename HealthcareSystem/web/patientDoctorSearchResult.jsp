@@ -4,6 +4,8 @@
     Author     : mfarova
 --%>
 
+<%@page import="HealthcareSystem.Doctor"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,7 +16,17 @@
     <body>
         <h1>Patient Doctor Search Results</h1>
         
+        <%! ArrayList<Doctor> doctors;%>
+        <%
+            doctors = (ArrayList<Doctor>) request.getAttribute("doctorList");
+            for (Doctor doctor : doctors) {
+        %>
         
+        <%= doctor.license_year%>
+        
+    <%
+            }
+        %>
         
     </body>
 </html>
