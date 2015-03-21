@@ -16,7 +16,7 @@
         <form method="post" action="PatientLoginServlet">
             <p>
             ID: <input type="text" name="patientID" size="20" autofocus><br/>
-            Password: <input type="password" name="patientPassword" size="20" autofocus><br/>
+            Password: <input type="password" name="patientPassword" size="20"><br/>
             <p> 
             <input type="submit">
         </form>
