@@ -256,7 +256,7 @@ public class PatientDoctorSearchResultServlet extends HttpServlet {
         }
         
         
-        if(request.getParameter("reviewed_by_friend").equals("true"))
+        if(request.getParameter("reviewed_by_friend") != null)
         {
             if(!allEmpty)
             {
