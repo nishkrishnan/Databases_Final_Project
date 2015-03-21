@@ -29,9 +29,35 @@ public class PatientSearchServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+        Patient pat = new Patient();
+        pat.alias = request.getParameter("patientID");
+        pat.province = request.getParameter("patientProvince");
+        pat.city = request.getParameter("patientCity");
+                                 
+                          
+        StringBuilder query = new StringBuilder();
+        /* DISPLAYS ALL PATIENTS FOR NOW, SEARCH NEEDS TO BE REWORKED*/
+        query.append("select Review_data.pat_alias, city, province, Review_data.numReviews, "
+                + "Review_data.lastReview from (select pat_alias, count(*) as numReviews, MAX(review_date)"
+                + "lastReview from Review Group by pat_alias) as Review_data "
+                + "INNER JOIN Patient ON Review_data.pat_alias=Patient.pat_alias"
+                + "WHERE Patient.pat_alias =");
+        query.append(pat.alias);
+                
+        /*select Review_data.pat_alias, city, province, Review_data.numReviews,
+
+Review_data.lastReview from (select pat_alias, count(*) as numReviews, MAX(review_date)
+
+as lastReview
+
+from Review
+
+Group by pat_alias) as Review_data
+
+INNER JOIN Patient ON Review_data.pat_alias=Patient.pat_alias */
+        //response.setContentType("text/html;charset=UTF-8");
+        /*try (PrintWriter out = response.getWriter()) {
+            TODO output your page here. You may use following sample code. 
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -41,7 +67,7 @@ public class PatientSearchServlet extends HttpServlet {
             out.println("<h1>Servlet PatientSearchServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
-        }
+        }*/
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

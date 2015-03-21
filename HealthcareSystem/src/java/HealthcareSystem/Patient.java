@@ -9,14 +9,8 @@ package HealthcareSystem;
  *
  * @author Nish
  */
-public class Patient {
-    public int id;
+public class Patient extends Person{
     public String province;
     public String city;
     
-    Patient(int patientID, String patientProvince, String patientCity) {
-        this.id = patientID;
-        this.province = patientProvince;
-        this.city = patientCity;
-    }
 }
