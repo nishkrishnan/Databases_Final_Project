@@ -8,6 +8,14 @@
         <servlet-name>DoctorLoginServlet</servlet-name>
         <servlet-class>HealthcareSystem.DoctorLoginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PatientDoctorSearchServlet</servlet-name>
+        <servlet-class>HealthcareSystem.PatientDoctorSearchServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PatientDoctorSearchResultServlet</servlet-name>
+        <servlet-class>HealthcareSystem.PatientDoctorSearchResultServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PatientLoginServlet</servlet-name>
         <url-pattern>/PatientLoginServlet</url-pattern>
@@ -16,6 +24,14 @@
         <servlet-name>DoctorLoginServlet</servlet-name>
         <url-pattern>/DoctorLoginServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PatientDoctorSearchServlet</servlet-name>
+        <url-pattern>/PatientDoctorSearchServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PatientDoctorSearchResultServlet</servlet-name>
+        <url-pattern>/PatientDoctorSearchResultServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -23,9 +39,9 @@
     </session-config>
     <resource-ref>
         <description>MySQL connection pool</description>
-        <res-ref-name>jdbc/myDatasource</res-ref-name> 
-        <res-type>javax.sql.ConnectionPoolDataSource</res-type> 
-        <res-auth>Container</res-auth> 
+        <res-ref-name>jdbc/myDatasource</res-ref-name>
+        <res-type>javax.sql.ConnectionPoolDataSource</res-type>
+        <res-auth>Container</res-auth>
         <res-sharing-scope>Shareable</res-sharing-scope>
     </resource-ref>
 </web-app>

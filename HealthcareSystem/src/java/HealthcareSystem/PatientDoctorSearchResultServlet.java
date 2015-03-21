@@ -5,20 +5,17 @@
 package HealthcareSystem;
 
 import java.io.IOException;
-import java.sql.Connection;
-import javax.naming.Context;
-import javax.naming.InitialContext;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 /**
  *
  * @author mfarova
  */
-public class PatientLoginServlet extends HttpServlet {
+public class PatientDoctorSearchResultServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -32,35 +29,22 @@ public class PatientLoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String url = "/patientMain.jsp";
-        try 
-        {
-            InitialContext cxt = new InitialContext();
-            if (cxt == null) 
-            {
-                throw new RuntimeException("Unable to create naming context!");
-            }
-            Context dbContext = (Context) cxt.lookup("java:comp/env");
-            DataSource ds = (DataSource) dbContext.lookup("jdbc/myDatasource");
-            if (ds == null) {
-                throw new RuntimeException("Data source not found!");
-            }
-            Connection con = ds.getConnection();
-
-            
-            
-            
-
-            con.close();
-            
-        } catch (Exception e) {
-            request.setAttribute("exception", e);
-            url = "/error.jsp";
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        try {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet PatientDoctorSearchResultServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet PatientDoctorSearchResultServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        } finally {            
+            out.close();
         }
-        
-        getServletContext().getRequestDispatcher(url).forward(request, response);
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

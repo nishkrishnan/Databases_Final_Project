@@ -5,7 +5,9 @@
 package HealthcareSystem;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
+import java.util.ArrayList;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.ServletException;
@@ -18,7 +20,7 @@ import javax.sql.DataSource;
  *
  * @author mfarova
  */
-public class PatientLoginServlet extends HttpServlet {
+public class PatientDoctorSearchServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -33,7 +35,7 @@ public class PatientLoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String url = "/patientMain.jsp";
+        String url = "/patientDoctorSearch.jsp";
         try 
         {
             InitialContext cxt = new InitialContext();
@@ -48,10 +50,12 @@ public class PatientLoginServlet extends HttpServlet {
             }
             Connection con = ds.getConnection();
 
+            ArrayList specializations = CommonQueries.getSpecializations(con);
+            request.setAttribute("specList", specializations);
             
+            ArrayList workAddresses = CommonQueries.getWorkAddresses(con);
+            request.setAttribute("workAddressesList", workAddresses);
             
-            
-
             con.close();
             
         } catch (Exception e) {

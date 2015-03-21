@@ -19,7 +19,7 @@
         <ul>      
         <li><a href="patientSearch.jsp">Patient Search</a></li>
         <li><a href="patientViewFriendRequests.jsp">View Friend Requests</a></li>
-        <li><a href="patientDoctorSearch.jsp">Doctor Search</a></li>
+        <li><a href="PatientDoctorSearchServlet">Doctor Search</a></li>
         </ul>
     
 </html>
