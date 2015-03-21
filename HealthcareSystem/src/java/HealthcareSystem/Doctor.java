@@ -10,4 +10,6 @@ package HealthcareSystem;
  */
 public class Doctor {
     
+    public int license_year;
+    
 }
