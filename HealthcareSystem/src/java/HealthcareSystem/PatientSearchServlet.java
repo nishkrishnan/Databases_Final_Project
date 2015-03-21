@@ -7,10 +7,17 @@ package HealthcareSystem;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 /**
  *
@@ -37,24 +44,46 @@ public class PatientSearchServlet extends HttpServlet {
                           
         StringBuilder query = new StringBuilder();
         /* DISPLAYS ALL PATIENTS FOR NOW, SEARCH NEEDS TO BE REWORKED*/
-        query.append("select Review_data.pat_alias, city, province, Review_data.numReviews, "
+        /*query.append("select Review_data.pat_alias, city, province, Review_data.numReviews, "
                 + "Review_data.lastReview from (select pat_alias, count(*) as numReviews, MAX(review_date)"
                 + "lastReview from Review Group by pat_alias) as Review_data "
                 + "INNER JOIN Patient ON Review_data.pat_alias=Patient.pat_alias"
-                + "WHERE Patient.pat_alias =");
-        query.append(pat.alias);
+                + "WHERE Patient.pat_alias = ?");*/
+        query.append("Select * from Patient where pat_alias = ?");
+        
+        
+        
+        String url = "/patientSearchResult.jsp";
+        try 
+        {
+            InitialContext cxt = new InitialContext();
+            if (cxt == null) 
+            {
+                throw new RuntimeException("Unable to create naming context!");
+            }
+            Context dbContext = (Context) cxt.lookup("java:comp/env");
+            DataSource ds = (DataSource) dbContext.lookup("jdbc/myDatasource");
+            if (ds == null) {
+                throw new RuntimeException("Data source not found!");
+            }
+            Connection con = ds.getConnection();
+
+            Statement stmt = null;
+        ArrayList<Patient> patList = new ArrayList<Patient>();
+        patList = CommonQueries.getPatients(con, pat, query.toString());
+        request.setAttribute("PatientList", patList);
+        
+        con.close();
+        
+        }
+        catch(Exception e) {
+            url = "/error.jsp";
+        
+        }
+        
+        
+        getServletContext().getRequestDispatcher(url).forward(request, response);
                 
-        /*select Review_data.pat_alias, city, province, Review_data.numReviews,
-
-Review_data.lastReview from (select pat_alias, count(*) as numReviews, MAX(review_date)
-
-as lastReview
-
-from Review
-
-Group by pat_alias) as Review_data
-
-INNER JOIN Patient ON Review_data.pat_alias=Patient.pat_alias */
         //response.setContentType("text/html;charset=UTF-8");
         /*try (PrintWriter out = response.getWriter()) {
             TODO output your page here. You may use following sample code. 

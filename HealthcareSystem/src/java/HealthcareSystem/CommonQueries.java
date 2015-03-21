@@ -5,6 +5,7 @@
 package HealthcareSystem;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -69,4 +70,37 @@ public class CommonQueries {
             }
         }
     }
+     
+     public static ArrayList<Patient> getPatients(Connection con, Patient pat, String query)
+             throws ClassNotFoundException, SQLException, Exception {
+         PreparedStatement stmt = null;
+        ArrayList<Patient> ret = new ArrayList<>();
+         try {
+            stmt = con.prepareStatement(query);
+            stmt.setString(1, pat.alias);
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                Patient p = new Patient();
+                
+                p.alias = resultSet.getString("pat_alias");
+                p.province = resultSet.getString("province");
+                p.city = resultSet.getString("city");
+                //p.numReviews = resultSet.getInt("Reviewdata.numReviews");
+                //p.dateOfLastReview = resultSet.getDate("Reviewdata.lastReview");
+                        
+                ret.add(p);
+            }
+        } 
+        catch(Exception e) {
+             throw new Exception(e);
+        }
+             
+         finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+            return ret;
+         
+     }
 }
