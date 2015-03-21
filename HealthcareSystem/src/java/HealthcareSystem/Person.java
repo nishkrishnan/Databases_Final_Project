@@ -17,11 +17,4 @@ public class Person {
     public String email;
     public String gender;
     
-    Person(String alias, String firstName, String lastName, String email, String gender) {
-        this.alias = alias;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.gender = gender;
-    }
 }
