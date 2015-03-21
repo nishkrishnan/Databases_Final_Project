@@ -16,15 +16,21 @@
     <body>
         <h1>Patient Doctor Search Results</h1>
         
+        <!The search should output a list of doctors, and for each doctor the following details: doctor’s name,
+        gender, average star rating, and number of reviews. For each doctor there should also be a link to view
+        the doctor’s profile.>
+        
+        
         <%! ArrayList<Doctor> doctors;%>
         <%
             doctors = (ArrayList<Doctor>) request.getAttribute("doctorList");
-            for (Doctor doctor : doctors) {
+            for (Doctor doctor : doctors) 
+            {
         %>
         
-        <%= doctor.license_year%>
+        <%= doctor.firstName%> <%= doctor.lastName%><br>
         
-    <%
+        <%
             }
         %>
         

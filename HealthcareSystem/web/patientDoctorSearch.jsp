@@ -26,9 +26,7 @@
     c) Find a female obstetrician in Kitchener who has held a medical license held for at least 10 years.
     d) Find all doctors in Ontario who have an average star rating of at least 2½.
     e) Find Waterloo cardiologists whose review includes the keyword “great”.
-    The search should output a list of doctors, and for each doctor the following details: doctor’s name,
-    gender, average star rating, and number of reviews. For each doctor there should also be a link to view
-    the doctor’s profile.>
+    >
     
     <br><br>
     
@@ -68,7 +66,10 @@
                 }
             %>
         </select><br/>
-        Years Licensed: <input type="yearsLicensed" name="lastName" type="number"><br/>
+        Years Licensed: <input name="years_licensed" type="number"><br/>
+        Avg. Star Rating Greater Than: <input name="star_rating" type="number" step="any" min="0"><br/>
+        Reviewed by friend: <input name="reviewed_by_friend " type="checkbox"><br/>
+        Review Keyword: <input type="text" name="reviewKeyword" size="20"><br/>
         
         <p> 
         <input type="submit">

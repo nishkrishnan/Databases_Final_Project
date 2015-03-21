@@ -8,8 +8,10 @@ package HealthcareSystem;
  *
  * @author mfarova
  */
-public class Doctor {
+public class Doctor extends Person{
     
     public int license_year;
+    public int star_rating;
+    public int num_reviews;
     
 }
