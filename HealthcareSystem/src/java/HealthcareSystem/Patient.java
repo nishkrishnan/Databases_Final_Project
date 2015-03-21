@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package HealthcareSystem;
-
+import java.util.Date;
 /**
  *
  * @author Nish
@@ -12,5 +12,7 @@ package HealthcareSystem;
 public class Patient extends Person{
     public String province;
     public String city;
+    public int numReviews;
+    public Date dateOfLastReview;
     
 }
