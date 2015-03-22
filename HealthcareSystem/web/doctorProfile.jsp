@@ -113,8 +113,6 @@
                 <td>Link</td>
             </tr>
         
-            
-        <a href="patientDoctorAddReview.jsp?ID=<%= doctorData.alias%>">Add Review</a>
         <%! ArrayList<Review> reviews;%>
         <%
             reviews = (ArrayList<Review>) request.getAttribute("reviews");
