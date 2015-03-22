@@ -22,6 +22,28 @@
 friend, but whom this patient has not yet added as a friend. For each patient the alias and e-mail are
 shown, as well as a link to add that patient as a friend, thus confirming the friendship.
 
+        <%! ArrayList<String> friendrequests;%>
+    <%
+        friendrequests = (ArrayList<String>) request.getAttribute("friendRequestsList");
+        int row_counter = 0;
+        for (String friendrequest : friendrequests) {
+
+    %>
+
+    <%= friendrequest%>
+    <% if (row_counter == 2){
+        row_counter = 0;
+    %>
+    <br>
+    <%
+        row_counter++;
+        }
+    %>
+    <%
+        }
+    %>
+    
+
         <% } %>
     </body>
 </html>
