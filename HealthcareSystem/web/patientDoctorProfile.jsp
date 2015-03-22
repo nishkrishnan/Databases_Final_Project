@@ -4,6 +4,8 @@
     Author     : mfarova
 --%>
 
+<%@page import="HealthcareSystem.Review"%>
+<%@page import="HealthcareSystem.Specialization"%>
 <%@page import="HealthcareSystem.Doctor"%>
 <%@page import="HealthcareSystem.WorkAddress"%>
 <%@page import="java.util.ArrayList"%>
@@ -30,15 +32,42 @@
                 <td>Gender</td>
                 <td>Average Rating</td>
                 <td># Reviews</td>
+                <td>Years Licensed</td>
             </tr>
             <tr>
                 <td><%= doctorData.firstName%> <%= doctorData.lastName%></td>
                 <td><%= doctorData.gender%></td>
                 <td><%= doctorData.star_rating%></td>
                 <td><%= doctorData.num_reviews%></td>
+                <td><%= doctorData.years_licensed%></td>
             </tr>
         </table>
         
+            
+        <br><br>
+        
+        <table>
+            <tr>
+                <td>Specializations</td>
+            </tr>
+        
+        <%! ArrayList<Specialization> specializations;%>
+        <%
+            specializations = (ArrayList<Specialization>) request.getAttribute("specializations");
+            for (Specialization spec : specializations) 
+            {
+        %>
+            <tr>
+                <td><%= spec.spec_name%></td>
+            </tr>
+        <%
+            }
+        %>
+        
+        </table>
+        
+            
+        <br><br>
         
         <table>
             <tr>
@@ -66,7 +95,33 @@
         
         </table>
         
+        <br><br>
         
+        <table>
+            <tr>
+                <td>Date</td>
+                <td>Link</td>
+            </tr>
+        
+            
+        <a href="PatientDoctorAddReview.jsp">Add Review</a>
+        <%! ArrayList<Review> reviews;%>
+        <%
+            reviews = (ArrayList<Review>) request.getAttribute("reviews");
+            for (Review review : reviews) 
+            {
+        %>
+            <tr>
+                <td><%= review.review_date.toString()%></td>
+                <td><a href="PatientDoctorReviewServlet?ID=<%= review.review_ID%>">View Review</a></td>
+            </tr>
+        <%
+            }
+        %>
+        
+        </table>
+        
+        <br><br>
         
     </body>
 </html>

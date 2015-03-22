@@ -41,7 +41,7 @@
                 <td><%= doctor.gender%></td>
                 <td><%= doctor.star_rating%></td>
                 <td><%= doctor.num_reviews%></td>
-                <td><a href="patientDoctorProfile?ID=<%= doctor.alias%>">Profile</a></td>
+                <td><a href="PatientDoctorProfileServlet?ID=<%= doctor.alias%>">Profile</a></td>
             </tr>
         <%
             }
