@@ -13,10 +13,12 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="style.css" /> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>View Doctor Profile</title>
     </head>
     <body> 
+    <center>
         <% if ((session.getAttribute("patient") == null) || (session.getAttribute("patient") == "")) { %>
         You are not logged in as a Patient<br/>
         <a href="patientLogin.jsp">Please Login</a>
@@ -31,31 +33,26 @@
         
         <% Doctor doctorData = (Doctor)request.getAttribute("doctorData"); %>
         
+        <h2>Doctor Information</h2>
         <table>
             <tr>
-                <td>Name</td>
-                <td>Gender</td>
-                <td>Average Rating</td>
-                <td># Reviews</td>
-                <td>Years Licensed</td>
+                <td><b>Name</b></td>
+                <td><b>Gender</b></td>
+                <td><b>Average Rating</b></td>
+                <td><b># Reviews</b></td>
+                <td><b>Years Licensed</b></td>
             </tr>
             <tr>
-                <td><%= doctorData.firstName%> <%= doctorData.lastName%></td>
-                <td><%= doctorData.gender%></td>
-                <td><%= doctorData.star_rating%></td>
-                <td><%= doctorData.num_reviews%></td>
-                <td><%= doctorData.years_licensed%></td>
+                <td><center><%= doctorData.firstName%> <%= doctorData.lastName%></center></td>
+                <td><center><%= doctorData.gender%></center></td>
+                <td><center><%= doctorData.star_rating%></center></td>
+                <td><center><%= doctorData.num_reviews%></center></td>
+                <td><center><%= doctorData.years_licensed%></center></td>
             </tr>
         </table>
         
-            
-        <br><br>
-        
+        <h2>Specializations</h2>
         <table>
-            <tr>
-                <td>Specializations</td>
-            </tr>
-        
         <%! ArrayList<Specialization> specializations;%>
         <%
             specializations = (ArrayList<Specialization>) request.getAttribute("specializations");
@@ -63,7 +60,7 @@
             {
         %>
             <tr>
-                <td><%= spec.spec_name%></td>
+                <td><center><%= spec.spec_name%></center></td>
             </tr>
         <%
             }
@@ -71,15 +68,13 @@
         
         </table>
         
-            
-        <br><br>
-        
+        <h2>Work Addresses</h2>
         <table>
             <tr>
-                <td>Street</td>
-                <td>City</td>
-                <td>Province</td>
-                <td>Postal Code</td>
+                <td><b>Street</b></td>
+                <td><b>City</b></td>
+                <td><b>Province</b></td>
+                <td><b>Postal Code</b></td>
             </tr>
         
         <%! ArrayList<WorkAddress> workAddresses;%>
@@ -89,10 +84,10 @@
             {
         %>
             <tr>
-                <td><%= address.street_num%> <%= address.street_name%></td>
-                <td><%= address.city%></td>
-                <td><%= address.province%></td>
-                <td><%= address.postal_code%></td>
+                <td><center><%= address.street_num%> <%= address.street_name%></center></td>
+                <td><center><%= address.city%></center></td>
+                <td><center><%= address.province%></center></td>
+                <td><center><%= address.postal_code%></center></td>
             </tr>
         <%
             }
@@ -100,12 +95,11 @@
         
         </table>
         
-        <br><br>
-        
+        <h2>Reviews</h2>
         <table>
             <tr>
-                <td>Date</td>
-                <td>Link</td>
+                <td><b>Date</b></td>
+                <td><b>Link</b></td>
             </tr>
         
             
@@ -117,8 +111,8 @@
             {
         %>
             <tr>
-                <td><%= review.review_date.toString()%></td>
-                <td><a href="ViewReviewServlet?ID=<%= review.review_ID%>&doc=<%=doctorData.alias%>">View Review</a></td>
+                <td><center><%= review.review_date.toString()%></center></td>
+                <td><center><a href="ViewReviewServlet?ID=<%= review.review_ID%>&doc=<%=doctorData.alias%>">View Review</a></center></td>
             </tr>
         <%
             }
@@ -128,6 +122,9 @@
         
         <br><br>
         
+            <a href="patientMain.jsp">Go Back</a>
+        
         <% } %>
+        </center>
     </body>
 </html>

@@ -8,10 +8,12 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="style.css" /> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Write Doctor Review </title>
     </head>
     <body> 
+        <center>
         <% if ((session.getAttribute("patient") == null) || (session.getAttribute("patient") == "")) { %>
         You are not logged in as a Patient<br/>
         <a href="patientLogin.jsp">Please Login</a>
@@ -24,7 +26,7 @@
         {
             String msg = (String) request.getAttribute("msg");
         %>
-            <font size="3" color="red">
+            <font class="error">
             <%=msg%>
             </font>
         <%  
@@ -32,6 +34,9 @@
         %>
         <br><br>
         
+        <input action="action" type="button" value="Go Back" onclick="window.history.go(-1); return false;" />
+        
         <% } %>
+        </center>
     </body>
 </html>

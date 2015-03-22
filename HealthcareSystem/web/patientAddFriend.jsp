@@ -8,10 +8,12 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="style.css" /> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Friend</title>
     </head>
     <body>
+        <center>
         <% if ((session.getAttribute("patient") == null) || (session.getAttribute("patient") == "")) { %>
         You are not logged in as a Patient<br/>
         <a href="patientLogin.jsp">Please Login</a>
@@ -23,5 +25,6 @@ friendship has been formed (i.e., A added B and B added A) or not yet (i.e., A a
 added A).
 
         <% } %>
+        </center>
     </body>
 </html>

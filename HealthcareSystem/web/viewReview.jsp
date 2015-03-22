@@ -8,10 +8,12 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="style.css" /> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>View Doctor Review</title>
     </head>
-     
+    <body>
+        <center>
         <% if ((session.getAttribute("patient") == null) || (session.getAttribute("patient") == "") &&
                 (session.getAttribute("doctor") == null) || (session.getAttribute("doctor") == "")) { %>
         You are not logged in<br/>
@@ -25,49 +27,47 @@
             %>
 
             <h1>Review </h1>
-            <table>
+            <table width="500px">
                 <tr>
-                    <th>Previous Review </th>
                     <th>Review ID</th>
                     <th>Review Date</th>
                     <th>Rating</th>
-                    <th>Text</th>
                     <th>Reviewer</th>
-                    <th>Next Review</th>
                 </tr>
                 <tr>
+                    <td><center><%=currentReview.review_ID%></center></td>
+                    <td><center><%=currentReview.review_date%></center></td>
+                    <td><center><%=currentReview.rating%></center></td>
+                    <td><center><%=currentReview.patient_alias%></center></td>
+                </tr>
+                <tr>
+                    <td colspan="4"><%=currentReview.text%></td>
+                </tr>
+            </table> 
+                    
+            <table>
+                <tr>
                     <% if (lastReview != null) { %>
-                        <td><a href="ViewReviewServlet?ID=<%= lastReview.review_ID%>&doc=<%=docAlias%>">Previous Review</a></td>
+                        <td><a href="ViewReviewServlet?ID=<%= lastReview.review_ID%>&doc=<%=docAlias%>"><< Previous Review</a></td>
                     <% } else { %>
-                        <td>N/A</td>
-                    <% } %>
-                    <td><%=currentReview.review_ID%></td>
-                    <td><%=currentReview.review_date%></td>
-                    <td><%=currentReview.rating%></td>
-                    <td><%=currentReview.text%></td>
-                    <td><%=currentReview.patient_alias%></td>
-                     <% if (nextReview != null) { %>
-                        <td><a href="ViewReviewServlet?ID=<%= nextReview.review_ID%>&doc=<%=docAlias%>">Next Review</a></td>
-                    <% } else { %>
-                        <td>N/A</td>
+                        <td>---</td>
                     <% } %>
                     
+                    <% if (nextReview != null) { %>
+                        <td><a href="ViewReviewServlet?ID=<%= nextReview.review_ID%>&doc=<%=docAlias%>">Next Review >></a></td>
+                    <% } else { %>
+                        <td>---</td>
+                    <% } %>
                 </tr>
-            </table> <br>
-            
-            
-            
-            
+            </table>
+                <br><br>
+            <a href="patientMain.jsp">Go Back</a>
+        
         <!--(accessible from view doctor profile). For one review display the name of the
         doctor and the review details: date, star rating, and free-form comments. There should also be links to
-        the previous and next reviews for that doctor in the chronological ordering.--!>
+        the previous and next reviews for that doctor in the chronological ordering.-->
         
-        
-        
-        
-        
-        
-
         <% } %>
-    
+        </center>
+    </body>
 </html>
