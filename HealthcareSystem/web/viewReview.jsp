@@ -43,23 +43,43 @@
                 <tr>
                     <td colspan="4"><%=currentReview.text%></td>
                 </tr>
+                <tr>
+                    <td colspan="4">
+                        <table width="100%">
+                            <tr>
+                                <% if (lastReview != null) { %>
+                                <td width="50%">
+                                    <center>
+                                        <a href="ViewReviewServlet?ID=<%= lastReview.review_ID%>&doc=<%=docAlias%>"><< Previous Review</a>
+                                    </center>
+                                </td>
+                                <% } else { %>
+                                    <td width="50%">
+                                        <center>
+                                            ---
+                                        </center>
+                                    </td>
+                                <% } %>
+
+                                <% if (nextReview != null) { %>
+                                    <td width="50%">
+                                        <center>
+                                            <a href="ViewReviewServlet?ID=<%= nextReview.review_ID%>&doc=<%=docAlias%>">Next Review >></a>
+                                        </center>
+                                    </td>
+                                <% } else { %>
+                                    <td width="50%">
+                                        <center>
+                                            ---
+                                        </center>
+                                    </td>
+                                <% } %>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
             </table> 
                     
-            <table>
-                <tr>
-                    <% if (lastReview != null) { %>
-                        <td><a href="ViewReviewServlet?ID=<%= lastReview.review_ID%>&doc=<%=docAlias%>"><< Previous Review</a></td>
-                    <% } else { %>
-                        <td>---</td>
-                    <% } %>
-                    
-                    <% if (nextReview != null) { %>
-                        <td><a href="ViewReviewServlet?ID=<%= nextReview.review_ID%>&doc=<%=docAlias%>">Next Review >></a></td>
-                    <% } else { %>
-                        <td>---</td>
-                    <% } %>
-                </tr>
-            </table>
                 <br><br>
             <a href="patientMain.jsp">Go Back</a>
         
