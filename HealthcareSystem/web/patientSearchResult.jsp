@@ -17,7 +17,7 @@
         <%! ArrayList<Patient> patientList;%>
     <% patientList = (ArrayList<Patient>) request.getAttribute("PatientList");%>
     
-    <table border=1><tr><th>"Patient Alias"</th><th>"Province"</th><th>"City"</th><%--<th>"Number of Reviews"</th><th>"Last Review"</th>--%></tr>
+    <table border=1><tr><th>"Patient Alias"</th><th>"Province"</th><th>"City"</th><th>"Number of Reviews"</th><th>"Last Review"</th><th>Add Friend</th></tr>
             <%
                 for (Patient p : patientList) {
             %>
@@ -25,14 +25,15 @@
                 <td><%= p.alias%></td>
                 <td><%= p.province%></td>
                 <td><%= p.city%></td>
+                <td><%= p.numReviews%></td>
+                <td><%= p.dateOfLastReview%></td>
                 <% if(p.isFriend) {%>
                  <td>FRIEND</td>
                  <% } else { %>
                  <% %>
                  <td><a href="AddFriendServlet?alias=<%=p.alias%>">Add Friend</a></td>
                  <% } %>
-                <%--<td><%= p.numReviews%></td>
-                <td><%= p.dateOfLastReview%></td> --%>
+                
             </tr>
             <%
                 }
