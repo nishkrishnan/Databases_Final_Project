@@ -24,30 +24,34 @@
         <!A patient views a list of other patients who have added them as a
 friend, but whom this patient has not yet added as a friend. For each patient the alias and e-mail are
 shown, as well as a link to add that patient as a friend, thus confirming the friendship.!>
-
+        <table>
+        <tr>
         <%! ArrayList<String> friendrequests;%>
     <%
+         String alias = null;
         friendrequests = (ArrayList<String>) request.getAttribute("friendRequestsList");
-        int row_counter = 0;
+        int col_counter = 0;
         for (String friendrequest : friendrequests) {
-
     %>
 
-    <%= friendrequest%>
-    <% if (row_counter == 2){
-        row_counter = 0;
-    %>
-    <br>
+    <td><%= friendrequest%></td>
+    <% if (col_counter == 1){
+        col_counter = 0;    %>
+        <td><a href="AcceptFriendRequestServlet?ID=<%= alias%>">Accept</a></td></tr><tr>
     <%
-        row_counter++;
         }
+     else {
+        alias = friendrequest;
+        col_counter++;
+    }
     %>
     <%
         }
     %>
     
+        </table>
 
-    <br><br><a href="patientMain.jsp">Go Back</a>
+        <br><br><a href="patientMain.jsp">Go Back</a>
         
         <% } %>
         </center>

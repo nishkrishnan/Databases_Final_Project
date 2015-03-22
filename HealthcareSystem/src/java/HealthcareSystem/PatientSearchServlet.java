@@ -41,7 +41,8 @@ public class PatientSearchServlet extends HttpServlet {
         pat.alias = request.getParameter("patientID");
         pat.province = request.getParameter("patientProvince");
         pat.city = request.getParameter("patientCity");
-                                 
+        
+        String url;
 
         /* DISPLAYS ALL PATIENTS FOR NOW, SEARCH NEEDS TO BE REWORKED*/
         
@@ -52,38 +53,43 @@ public class PatientSearchServlet extends HttpServlet {
                 + "INNER JOIN Patient ON Review_data.pat_alias=Patient.pat_alias"
                 + "WHERE Patient.pat_alias = ?");*/
         
-        
-        String url = "/patientSearchResult.jsp";
-        try 
-        {
-            InitialContext cxt = new InitialContext();
-            if (cxt == null) 
+        if (!pat.alias.isEmpty() || !pat.province.isEmpty() || !pat.city.isEmpty()) {
+            url = "/patientSearchResult.jsp";
+            try 
             {
-                throw new RuntimeException("Unable to create naming context!");
-            }
-            Context dbContext = (Context) cxt.lookup("java:comp/env");
-            DataSource ds = (DataSource) dbContext.lookup("jdbc/myDatasource");
-            if (ds == null) {
-                throw new RuntimeException("Data source not found!");
-            }
-            Connection con = ds.getConnection();
+                InitialContext cxt = new InitialContext();
+                if (cxt == null) 
+                {
+                    throw new RuntimeException("Unable to create naming context!");
+                }
+                Context dbContext = (Context) cxt.lookup("java:comp/env");
+                DataSource ds = (DataSource) dbContext.lookup("jdbc/myDatasource");
+                if (ds == null) {
+                    throw new RuntimeException("Data source not found!");
+                }
+                Connection con = ds.getConnection();
 
-            Statement stmt = null;
-            
-            
-        ArrayList<Patient> patList = new ArrayList<>();
-        
+                Statement stmt = null;
 
-        patList = CommonQueries.getPatients(con, generateQuery(pat, con), request);
-        request.setAttribute("PatientList", patList);
-        
-        con.close();
-        
+
+            ArrayList<Patient> patList = new ArrayList<>();
+
+
+            patList = CommonQueries.getPatients(con, generateQuery(pat, con), request);
+            request.setAttribute("PatientList", patList);
+
+            con.close();
+
+            }
+            catch(Exception e) {
+                url = "/error.jsp";
+
+            }
         }
-        catch(Exception e) {
-            url = "/error.jsp";
-        
+        else {
+            url = "/patientSearch.jsp";
         }
+        
         
         
         getServletContext().getRequestDispatcher(url).forward(request, response);
