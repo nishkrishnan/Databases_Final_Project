@@ -22,7 +22,7 @@
         <h1>Please select one of the following:</h1>
         <ul>      
         <li><a href="patientSearch.jsp">Patient Search</a></li>
-        <li><a href="${pageContext.request.contextPath}/ViewFriendRequestsServlet">View Friend Requests</a></li>
+        <li><a href="ViewFriendRequestsServlet">View Friend Requests</a></li>
         <li><a href="PatientDoctorSearchServlet">Doctor Search</a></li>
         <li><a href="LogoutServlet">Logout</a></li>
         </ul>
