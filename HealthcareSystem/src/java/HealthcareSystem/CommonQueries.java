@@ -105,10 +105,12 @@ public class CommonQueries {
                     "\n" +
                     "and (b.pat_alias = a.pat_added_alias AND b.pat_added_alias = a.pat_alias)) as w\n" +
                     "\n" +
-                    "where w.pat_alias =");
+                    "where w.pat_alias = '");
             
             String patientName = String.valueOf(request.getSession().getAttribute("patient"));
             sb.append(patientName);
+            sb.append("'");
+            
             ResultSet resultSet = stmt.executeQuery(sb.toString());
             
             ret = new ArrayList<>();
