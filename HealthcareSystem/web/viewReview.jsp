@@ -22,6 +22,11 @@
         <!(accessible from view doctor profile). For one review display the name of the
         doctor and the review details: date, star rating, and free-form comments. There should also be links to
         the previous and next reviews for that doctor in the chronological ordering.>
+        
+        
+        
+        
+        
 
         <% } %>
     </body>
