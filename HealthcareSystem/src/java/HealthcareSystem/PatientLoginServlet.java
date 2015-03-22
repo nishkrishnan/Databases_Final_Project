@@ -60,6 +60,7 @@ public class PatientLoginServlet extends HttpServlet {
                 
                 HttpSession session = request.getSession(true);
                 session.setAttribute("patient",patientID);
+                session.setAttribute("doctor",null);
             }
             else
             {
