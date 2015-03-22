@@ -12,9 +12,23 @@
         <title>Doctor Profile</title>
     </head>
     <body>
+        
+        <%
+            if ((session.getAttribute("doctor") == null) || (session.getAttribute("doctor") == "")) {
+        %>
+        You are not logged in as a Doctor<br/>
+        <a href="doctorLogin.jsp">Please Login</a>
+        <%} 
+            else {
+        %>
+        
         <h1>Doctor Profile</h1>
         Similar to the view doctor profile feature for patients, but shows full
 profile information including e-mail address. The list of reviews for this doctor should also be displayed
 with links to individual reviews, as in the interface for patients.
+        
+<%
+            }
+        %>
     </body>
 </html>

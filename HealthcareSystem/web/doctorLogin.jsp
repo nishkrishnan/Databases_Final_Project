@@ -13,10 +13,23 @@
     </head>
     <body>
         <h1>Doctor Login</h1>
+        
+        <%
+        if(request.getAttribute("msg") != null)
+        {
+            String msg = (String) request.getAttribute("msg");
+        %>
+            <font size="3" color="red">
+            <%=msg%>
+            </font>
+        <%  
+        }
+        %>
+        
         <form method="post" action="DoctorLoginServlet">
             <p>
-            ID: <input type="text" name="patientID" size="20" autofocus><br/>
-            Password: <input type="password" name="patientPassword" size="20" autofocus><br/>
+            ID: <input type="text" name="username" size="20" autofocus><br/>
+            Password: <input type="password" name="password" size="20"><br/>
             <p> 
             <input type="submit">
         </form>

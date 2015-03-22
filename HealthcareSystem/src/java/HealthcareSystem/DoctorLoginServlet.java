@@ -6,12 +6,16 @@ package HealthcareSystem;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 /**
@@ -33,7 +37,7 @@ public class DoctorLoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String url = "/patientMain.jsp";
+        String url = "/doctorProfile.jsp";
         try 
         {
             InitialContext cxt = new InitialContext();
@@ -48,20 +52,103 @@ public class DoctorLoginServlet extends HttpServlet {
             }
             Connection con = ds.getConnection();
 
+            boolean success = isLoginSuccessful(con, request);
             
-            
-            
-
             con.close();
             
+            if(success)
+            {
+                String docID = request.getParameter("username");
+                
+                HttpSession session = request.getSession(true);
+                session.setAttribute("doctor",docID);
+            }
+            else
+            {
+                url = "/doctorLogin.jsp";
+            }
+            
         } catch (Exception e) {
-            request.setAttribute("exception", e);
             url = "/error.jsp";
         }
         
         getServletContext().getRequestDispatcher(url).forward(request, response);
         
     }
+    
+    public static boolean isLoginSuccessful(Connection con, HttpServletRequest request)
+        throws ClassNotFoundException, SQLException 
+    {
+        Boolean success = true;
+        PreparedStatement stmt = null;
+        String msg = "";
+        try
+        {
+            String query = "SELECT CASE " +
+                "WHEN EXISTS (" +
+                "SELECT * " +
+                "FROM Person " +
+                "WHERE person_alias = ? " +
+                "AND password = SHA2(CONCAT((SELECT salt FROM Person WHERE person_alias = ?), ?), 224) " +
+                ") " +
+                "THEN 1 " +
+                "ELSE 0 " +
+                "END AS Success";
+            
+            stmt = con.prepareStatement(query); 
+             
+            if(request.getParameter("username").isEmpty())
+            {
+                msg = "Username is missing";
+                throw new Exception();
+            }
+            stmt.setString(1, request.getParameter("username"));
+            stmt.setString(2, request.getParameter("username"));
+            
+            if(request.getParameter("password").isEmpty())
+            {
+                msg = "Password is Missing";
+                throw new Exception();
+            }
+            stmt.setString(3, request.getParameter("password"));
+            
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                switch (resultSet.getInt("Success"))
+                {
+                    case 1:
+                        success = true;
+                        break;
+                    case 0:
+                        success = false;
+                        break;
+                }
+                return success;
+            }
+        }
+        catch(Exception e)
+        {
+            return false;
+        } 
+        finally 
+        {
+            if(!success)
+            {
+                msg = "Username and password do not match";
+            }
+            
+            request.setAttribute("msg", msg);
+            
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+        
+        return true;
+    }
+    
+
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
