@@ -28,6 +28,10 @@
         <servlet-name>PatientDoctorAddReviewResultServlet</servlet-name>
         <servlet-class>HealthcareSystem.PatientDoctorAddReviewResultServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>HealthcareSystem.LogoutServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PatientLoginServlet</servlet-name>
         <url-pattern>/PatientLoginServlet</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>PatientDoctorAddReviewResultServlet</servlet-name>
         <url-pattern>/PatientDoctorAddReviewResultServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

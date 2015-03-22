@@ -1,34 +1,26 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package HealthcareSystem;
 
-import static HealthcareSystem.CommonQueries.isLoginSuccessful;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.sql.DataSource;
 
 /**
  *
- * @author mfarova
+ * @author Mickey
  */
-public class DoctorLoginServlet extends HttpServlet {
+public class LogoutServlet extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -38,35 +30,19 @@ public class DoctorLoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String url = "/doctorProfile.jsp";
+        String url = "/index.jsp";
         try 
         {
-            InitialContext cxt = new InitialContext();
-            if (cxt == null) 
-            {
-                throw new RuntimeException("Unable to create naming context!");
-            }
-            Context dbContext = (Context) cxt.lookup("java:comp/env");
-            DataSource ds = (DataSource) dbContext.lookup("jdbc/myDatasource");
-            if (ds == null) {
-                throw new RuntimeException("Data source not found!");
-            }
-            Connection con = ds.getConnection();
-
-            boolean success = isLoginSuccessful(con, request);
+            HttpSession session = request.getSession(true);
             
-            con.close();
-            
-            if(success)
+            if(session.getAttribute("doctor") != null)
             {
-                String docID = request.getParameter("username");
-                
-                HttpSession session = request.getSession(true);
-                session.setAttribute("doctor",docID);
+                session.setAttribute("doctor", null);
             }
-            else
+            
+            if(session.getAttribute("patient") != null)
             {
-                url = "/doctorLogin.jsp";
+                session.setAttribute("patient", null);
             }
             
         } catch (Exception e) {
@@ -75,12 +51,12 @@ public class DoctorLoginServlet extends HttpServlet {
         
         getServletContext().getRequestDispatcher(url).forward(request, response);
         
+        
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -94,8 +70,7 @@ public class DoctorLoginServlet extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP
-     * <code>POST</code> method.
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -117,4 +92,5 @@ public class DoctorLoginServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

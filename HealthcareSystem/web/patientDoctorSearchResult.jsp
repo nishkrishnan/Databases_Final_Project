@@ -13,7 +13,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Patient Doctor Search Results</title>
     </head>
-    <body>
+    <body> 
+        <% if ((session.getAttribute("patient") == null) || (session.getAttribute("patient") == "")) { %>
+        You are not logged in as a Patient<br/>
+        <a href="patientLogin.jsp">Please Login</a>
+        <% } else { %>
+        
         <h1>Patient Doctor Search Results</h1>
         
         <!The search should output a list of doctors, and for each doctor the following details: doctor’s name,
@@ -47,6 +52,7 @@
             }
         %>
         
+        <% } %>
         </table>
     </body>
 </html>

@@ -4,6 +4,7 @@
  */
 package HealthcareSystem;
 
+import static HealthcareSystem.CommonQueries.isLoginSuccessful;
 import java.io.IOException;
 import java.sql.Connection;
 import javax.naming.Context;
@@ -12,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 /**
@@ -48,14 +50,23 @@ public class PatientLoginServlet extends HttpServlet {
             }
             Connection con = ds.getConnection();
 
+            boolean success = isLoginSuccessful(con, request);
             
-            
-            
-
             con.close();
             
+            if(success)
+            {
+                String patientID = request.getParameter("username");
+                
+                HttpSession session = request.getSession(true);
+                session.setAttribute("patient",patientID);
+            }
+            else
+            {
+                url = "/patientLogin.jsp";
+            }
+            
         } catch (Exception e) {
-            request.setAttribute("exception", e);
             url = "/error.jsp";
         }
         

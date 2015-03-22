@@ -11,7 +11,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Write Doctor Review </title>
     </head>
-    <body>
+    <body> 
+        <% if ((session.getAttribute("patient") == null) || (session.getAttribute("patient") == "")) { %>
+        You are not logged in as a Patient<br/>
+        <a href="patientLogin.jsp">Please Login</a>
+        <% } else { %>
+        
         <h1>Write Doctor Review</h1>
         
         <%
@@ -27,5 +32,6 @@
         %>
         <br><br>
         
+        <% } %>
     </body>
 </html>

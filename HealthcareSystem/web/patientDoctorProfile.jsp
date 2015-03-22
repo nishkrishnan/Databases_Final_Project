@@ -16,7 +16,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>View Doctor Profile</title>
     </head>
-    <body>
+    <body> 
+        <% if ((session.getAttribute("patient") == null) || (session.getAttribute("patient") == "")) { %>
+        You are not logged in as a Patient<br/>
+        <a href="patientLogin.jsp">Please Login</a>
+        <% } else { %>
+        
         <h1>View Doctor Profile</h1>
         <!(accessible from doctor search). For one doctor display profile information
         (name, gender, work address(es), area(s) of specialization, and number of years licensed), the average
@@ -123,5 +128,6 @@
         
         <br><br>
         
+        <% } %>
     </body>
 </html>

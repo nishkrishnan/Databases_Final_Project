@@ -12,7 +12,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Patient Search Results</title>
     </head>
-    <body>
+    <body> 
+        <% if ((session.getAttribute("patient") == null) || (session.getAttribute("patient") == "")) { %>
+        You are not logged in as a Patient<br/>
+        <a href="patientLogin.jsp">Please Login</a>
+        <% } else { %>
+        
         
         <%! ArrayList<Patient> patientList;%>
     <% patientList = (ArrayList<Patient>) request.getAttribute("PatientList");%>
@@ -40,5 +45,7 @@
         </table>
         
         <a href="patientSearch.jsp">return to main page</a>
+        
+        <% } %>
     </body>
 </html>

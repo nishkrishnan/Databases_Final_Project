@@ -11,10 +11,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>View Friend Requests</title>
     </head>
-    <body>
+    <body> 
+        <% if ((session.getAttribute("patient") == null) || (session.getAttribute("patient") == "")) { %>
+        You are not logged in as a Patient<br/>
+        <a href="patientLogin.jsp">Please Login</a>
+        <% } else { %>
+        
         <h1>View Friend Requests</h1>
         A patient views a list of other patients who have added them as a
 friend, but whom this patient has not yet added as a friend. For each patient the alias and e-mail are
 shown, as well as a link to add that patient as a friend, thus confirming the friendship.
+
+        <% } %>
     </body>
 </html>
