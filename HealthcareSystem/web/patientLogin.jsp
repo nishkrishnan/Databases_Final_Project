@@ -13,6 +13,19 @@
     </head>
     <body>
         <h1>Patient Login</h1>
+        
+        <%
+        if(request.getAttribute("msg") != null)
+        {
+            String msg = (String) request.getAttribute("msg");
+        %>
+            <font size="3" color="red">
+            <%=msg%>
+            </font>
+        <%  
+        }
+        %>
+        
         <form method="post" action="PatientLoginServlet">
             <p>
             ID: <input type="text" name="username" size="20" autofocus><br/>

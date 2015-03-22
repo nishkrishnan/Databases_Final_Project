@@ -15,6 +15,11 @@
         <title>Doctor Search</title>
     </head>
     <body>
+        <% if ((session.getAttribute("patient") == null) || (session.getAttribute("patient") == "")) { %>
+        You are not logged in as a Patient<br/>
+        <a href="patientLogin.jsp">Please Login</a>
+        <% } else { %>
+        
         <h1>Doctor Search</h1>
     <!Patient searches for doctors by several criteria: doctor profile attributes
     (name or part thereof, gender, work address, specialization, and number of years licensed), average star
@@ -68,13 +73,14 @@
         </select><br/>
         Years Licensed: <input name="years_licensed" type="number"><br/>
         Avg. Star Rating Greater Than: <input name="star_rating" type="number" step="any" min="0"><br/>
-        Reviewed by friend: <input name="reviewed_by_friend " type="checkbox"><br/>
+        Reviewed by friend: <input name="reviewed_by_friend" type="checkbox"><br/>
         Review Keyword: <input type="text" name="reviewKeyword" size="20"><br/>
         
         <p> 
         <input type="submit">
     </form>
     
+        <% } %>
     </body>
     
 </html>

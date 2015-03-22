@@ -5,12 +5,10 @@
 package HealthcareSystem;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -328,8 +326,8 @@ public class PatientDoctorSearchResultServlet extends HttpServlet {
             }
             if(addReviewedByFriend)
             {
-                // NEED TO ADD NAME !!
-                stmt.setString(++num, "pat_anne");
+                String patientName = String.valueOf(request.getSession().getAttribute("patient"));
+                stmt.setString(++num, patientName);
             }
             if(addReviewKeyword)
             {

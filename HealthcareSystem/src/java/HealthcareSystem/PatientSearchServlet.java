@@ -73,7 +73,7 @@ public class PatientSearchServlet extends HttpServlet {
             
         ArrayList<Patient> patList = new ArrayList<>();
         
-        patList = CommonQueries.getPatients(con, generateQuery(pat, con));
+        patList = CommonQueries.getPatients(con, generateQuery(pat, con), request);
         request.setAttribute("PatientList", patList);
         
         con.close();

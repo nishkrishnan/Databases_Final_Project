@@ -12,6 +12,11 @@
         <title>Write Doctor Review</title>
     </head>
     <body>
+        <% if ((session.getAttribute("patient") == null) || (session.getAttribute("patient") == "")) { %>
+        You are not logged in as a Patient<br/>
+        <a href="patientLogin.jsp">Please Login</a>
+        <% } else { %>
+        
         <h1>Write Doctor Review</h1>
         <!(accessible from view doctor profile). The patient enters a star rating and freeform
         text comments. The application should compute the date of the review internally. Once the user
@@ -27,5 +32,6 @@
             <input type="submit">
         </form>
         
+        <% } %>
     </body>
 </html>

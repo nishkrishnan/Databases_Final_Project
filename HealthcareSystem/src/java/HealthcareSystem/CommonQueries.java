@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -70,13 +71,13 @@ public class CommonQueries {
             }
         }
     }
-    public static void AddFriend(Connection con, String alias)
+    public static void AddFriend(Connection con, String alias, HttpServletRequest request)
         throws ClassNotFoundException, SQLException, Exception {
         Statement stmt = null;
         try {
             stmt = con.createStatement();
             StringBuilder sb = new StringBuilder();
-            String current_user_alias = "pat_anne";
+            String current_user_alias = String.valueOf(request.getSession().getAttribute("patient"));
             sb.append("insert into Friend values('" + current_user_alias
                     + "', '" + alias + "');");
             stmt.execute(sb.toString()); 
@@ -91,7 +92,7 @@ public class CommonQueries {
                 
     }
      
-    public static ArrayList<String> getFriends(Connection con)
+    public static ArrayList<String> getFriends(Connection con, HttpServletRequest request)
             throws ClassNotFoundException, SQLException, Exception {
         Statement stmt = null;
         ArrayList<String> ret = null;
@@ -104,10 +105,12 @@ public class CommonQueries {
                     "\n" +
                     "and (b.pat_alias = a.pat_added_alias AND b.pat_added_alias = a.pat_alias)) as w\n" +
                     "\n" +
-                    "where w.pat_alias =");
+                    "where w.pat_alias = '");
             
-            /* THIS MUST BE CHANGED BECAUSE OBVIOUSLY PAT_ANNE ISNT THE ONLY USER*/
-            sb.append("'pat_anne'");
+            String patientName = String.valueOf(request.getSession().getAttribute("patient"));
+            sb.append(patientName);
+            sb.append("'");
+            
             ResultSet resultSet = stmt.executeQuery(sb.toString());
             
             ret = new ArrayList<>();
@@ -174,11 +177,11 @@ public class CommonQueries {
 
     }
     
-    public static boolean isFriend(Connection con, String alias)
+    public static boolean isFriend(Connection con, String alias, HttpServletRequest request)
             throws ClassNotFoundException, SQLException, Exception {
         ArrayList<String> friends;
         
-        friends = getFriends(con);
+        friends = getFriends(con, request);
         
         for (String friend: friends) {
             if (friend.equalsIgnoreCase(alias)) {
@@ -188,7 +191,7 @@ public class CommonQueries {
         return false;
     }
      
-     public static ArrayList<Patient> getPatients(Connection con,PreparedStatement stmt)
+     public static ArrayList<Patient> getPatients(Connection con,PreparedStatement stmt, HttpServletRequest request)
              throws ClassNotFoundException, SQLException, Exception {
          //PreparedStatement stmt = null;
         ArrayList<Patient> ret = new ArrayList<>();
@@ -201,9 +204,9 @@ public class CommonQueries {
                 p.province = resultSet.getString("province");
                 p.city = resultSet.getString("city");
                 //Add requested as friend as patient field
-                p.isFriend = isFriend(con,p.alias);
-                p.numReviews = resultSet.getInt("num_reviews");
-                p.dateOfLastReview = resultSet.getDate("last_review");
+                p.isFriend = isFriend(con,p.alias, request);
+                //p.numReviews = resultSet.getInt("Reviewdata.numReviews");
+                //p.dateOfLastReview = resultSet.getDate("Reviewdata.lastReview");
                         
                 ret.add(p);
             }
@@ -220,4 +223,76 @@ public class CommonQueries {
             return ret;
          
      }
+     
+    public static boolean isLoginSuccessful(Connection con, HttpServletRequest request)
+        throws ClassNotFoundException, SQLException 
+    {
+        Boolean success = true;
+        PreparedStatement stmt = null;
+        String msg = "";
+        try
+        {
+            String query = "SELECT CASE " +
+                "WHEN EXISTS (" +
+                "SELECT * " +
+                "FROM Person " +
+                "WHERE person_alias = ? " +
+                "AND password = SHA2(CONCAT((SELECT salt FROM Person WHERE person_alias = ?), ?), 224) " +
+                ") " +
+                "THEN 1 " +
+                "ELSE 0 " +
+                "END AS Success";
+            
+            stmt = con.prepareStatement(query); 
+             
+            if(request.getParameter("username").isEmpty())
+            {
+                msg = "Username is missing";
+                throw new Exception();
+            }
+            stmt.setString(1, request.getParameter("username"));
+            stmt.setString(2, request.getParameter("username"));
+            
+            if(request.getParameter("password").isEmpty())
+            {
+                msg = "Password is Missing";
+                throw new Exception();
+            }
+            stmt.setString(3, request.getParameter("password"));
+            
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                switch (resultSet.getInt("Success"))
+                {
+                    case 1:
+                        success = true;
+                        break;
+                    case 0:
+                        success = false;
+                        break;
+                }
+                return success;
+            }
+        }
+        catch(Exception e)
+        {
+            return false;
+        } 
+        finally 
+        {
+            if(!success)
+            {
+                msg = "Username and password do not match";
+            }
+            
+            request.setAttribute("msg", msg);
+            
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+        
+        return true;
+    }
+    
 }
