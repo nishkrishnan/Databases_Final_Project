@@ -333,7 +333,7 @@ public class PatientDoctorSearchResultServlet extends HttpServlet {
             }
             if(addReviewKeyword)
             {
-                stmt.setString(++num, "%"+request.getParameter("reviewKeyword")+"%");
+                stmt.setString(++num, "%"+"pat_anne"/*request.getParameter("reviewKeyword")*/+"%");
             }
             
         } catch (SQLException ex) {
