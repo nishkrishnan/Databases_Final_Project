@@ -101,7 +101,7 @@ public class PatientDoctorAddReviewResultServlet extends HttpServlet {
             stmt.setString(3, request.getParameter("text"));
             
             String patientName = String.valueOf(request.getSession().getAttribute("patient"));
-            stmt.setString(3, request.getParameter(patientName));
+            stmt.setString(4, patientName);
             
             if(request.getParameter("doctor_ID").isEmpty())
             {
