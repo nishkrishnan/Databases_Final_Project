@@ -126,6 +126,54 @@ public class CommonQueries {
             return ret;
         }
     }
+    public static ArrayList<String> getRequestedFriends(Connection con) 
+            throws ClassNotFoundException, SQLException, Exception  {
+        
+        Statement stmt = null;
+        ArrayList<String> ret = null;
+        try {
+            stmt = con.createStatement();
+            StringBuilder sb = new StringBuilder();
+            sb.append("select pat_added_alias from "
+                    + "(select distinct a.pat_alias, a.pat_added_alias from Friend a \n" 
+                    + "where pat_added_alias not in (select b.pat_alias from Friend b "
+                    + "where b.pat_added_alias = a.pat_alias)) as c \n"
+                    + "where pat_alias = ");
+            
+            /* THIS MUST BE CHANGED BECAUSE OBVIOUSLY PAT_ANNE ISNT THE ONLY USER*/
+            sb.append("'pat_anne'");
+            ResultSet resultSet = stmt.executeQuery(sb.toString());
+            
+            ret = new ArrayList<>();
+            while(resultSet.next()) {
+                ret.add(resultSet.getString("pat_added_alias"));
+            }
+            
+        
+        }
+        catch(Exception e) {
+            throw new Exception(e);
+        }
+        finally {
+            if (stmt != null)
+                stmt.close();
+            return ret;
+        }
+    }
+    public static boolean requestedToBeFriend(Connection con, String alias)
+            throws ClassNotFoundException, SQLException, Exception {
+        ArrayList<String> requested;
+        requested = getRequestedFriends(con);
+        
+        for (String patient: requested) {
+            if (patient.equalsIgnoreCase(alias)) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+    
     public static boolean isFriend(Connection con, String alias)
             throws ClassNotFoundException, SQLException, Exception {
         ArrayList<String> friends;
@@ -140,13 +188,11 @@ public class CommonQueries {
         return false;
     }
      
-     public static ArrayList<Patient> getPatients(Connection con, Patient pat, String query)
+     public static ArrayList<Patient> getPatients(Connection con,PreparedStatement stmt)
              throws ClassNotFoundException, SQLException, Exception {
-         PreparedStatement stmt = null;
+         //PreparedStatement stmt = null;
         ArrayList<Patient> ret = new ArrayList<>();
          try {
-            stmt = con.prepareStatement(query);
-            stmt.setString(1, pat.alias);
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()) {
                 Patient p = new Patient();
@@ -156,8 +202,8 @@ public class CommonQueries {
                 p.city = resultSet.getString("city");
                 //Add requested as friend as patient field
                 p.isFriend = isFriend(con,p.alias);
-                //p.numReviews = resultSet.getInt("Reviewdata.numReviews");
-                //p.dateOfLastReview = resultSet.getDate("Reviewdata.lastReview");
+                p.numReviews = resultSet.getInt("num_reviews");
+                p.dateOfLastReview = resultSet.getDate("last_review");
                         
                 ret.add(p);
             }
