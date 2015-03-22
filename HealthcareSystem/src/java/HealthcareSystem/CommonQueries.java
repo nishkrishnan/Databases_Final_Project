@@ -70,6 +70,75 @@ public class CommonQueries {
             }
         }
     }
+    public static void AddFriend(Connection con, String alias)
+        throws ClassNotFoundException, SQLException, Exception {
+        Statement stmt = null;
+        try {
+            stmt = con.createStatement();
+            StringBuilder sb = new StringBuilder();
+            String current_user_alias = "pat_anne";
+            sb.append("insert into Friend values('" + current_user_alias
+                    + "', '" + alias + "');");
+            stmt.execute(sb.toString()); 
+        }
+        catch(Exception e) {
+            throw new SQLException(e);
+        }
+        finally{
+            if (stmt != null)
+                stmt.close();
+        }
+                
+    }
+     
+    public static ArrayList<String> getFriends(Connection con)
+            throws ClassNotFoundException, SQLException, Exception {
+        Statement stmt = null;
+        ArrayList<String> ret = null;
+        try {
+            stmt = con.createStatement();
+            StringBuilder sb = new StringBuilder();
+            sb.append("select distinct w.pat_added_alias from (select b.* from Friend as a\n" +
+                    "\n" +
+                    "join Friend as b on a.pat_alias = b.pat_added_alias\n" +
+                    "\n" +
+                    "and (b.pat_alias = a.pat_added_alias AND b.pat_added_alias = a.pat_alias)) as w\n" +
+                    "\n" +
+                    "where w.pat_alias =");
+            
+            /* THIS MUST BE CHANGED BECAUSE OBVIOUSLY PAT_ANNE ISNT THE ONLY USER*/
+            sb.append("'pat_anne'");
+            ResultSet resultSet = stmt.executeQuery(sb.toString());
+            
+            ret = new ArrayList<>();
+            while(resultSet.next()) {
+                ret.add(resultSet.getString("pat_added_alias"));
+            }
+            
+        
+        }
+        catch(Exception e) {
+            throw new Exception(e);
+        }
+        finally {
+            if (stmt != null)
+                stmt.close();
+            return ret;
+        }
+    }
+    public static boolean isFriend(Connection con, String alias)
+            throws ClassNotFoundException, SQLException, Exception {
+        ArrayList<String> friends;
+        
+        friends = getFriends(con);
+        
+        for (String friend: friends) {
+            if (friend.equalsIgnoreCase(alias)) {
+                return true;
+            }
+        }
+        return false;
+    }
      
      public static ArrayList<Patient> getPatients(Connection con, Patient pat, String query)
              throws ClassNotFoundException, SQLException, Exception {
@@ -85,6 +154,8 @@ public class CommonQueries {
                 p.alias = resultSet.getString("pat_alias");
                 p.province = resultSet.getString("province");
                 p.city = resultSet.getString("city");
+                //Add requested as friend as patient field
+                p.isFriend = isFriend(con,p.alias);
                 //p.numReviews = resultSet.getInt("Reviewdata.numReviews");
                 //p.dateOfLastReview = resultSet.getDate("Reviewdata.lastReview");
                         

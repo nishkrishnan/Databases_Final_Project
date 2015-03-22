@@ -25,6 +25,12 @@
                 <td><%= p.alias%></td>
                 <td><%= p.province%></td>
                 <td><%= p.city%></td>
+                <% if(p.isFriend) {%>
+                 <td>FRIEND</td>
+                 <% } else { %>
+                 <% %>
+                 <td><a href="AddFriendServlet?alias=<%=p.alias%>">Add Friend</a></td>
+                 <% } %>
                 <%--<td><%= p.numReviews%></td>
                 <td><%= p.dateOfLastReview%></td> --%>
             </tr>

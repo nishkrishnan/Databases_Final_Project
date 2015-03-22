@@ -14,5 +14,5 @@ public class Patient extends Person{
     public String city;
     public int numReviews;
     public Date dateOfLastReview;
-    
+    public boolean isFriend;
 }
