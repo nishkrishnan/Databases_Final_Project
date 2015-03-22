@@ -329,11 +329,11 @@ public class PatientDoctorSearchResultServlet extends HttpServlet {
             if(addReviewedByFriend)
             {
                 // NEED TO ADD NAME !!
-                stmt.setString(++num, "");
+                stmt.setString(++num, "pat_anne");
             }
             if(addReviewKeyword)
             {
-                stmt.setString(++num, "%"+"pat_anne"/*request.getParameter("reviewKeyword")*/+"%");
+                stmt.setString(++num, "%"+request.getParameter("reviewKeyword")+"%");
             }
             
         } catch (SQLException ex) {

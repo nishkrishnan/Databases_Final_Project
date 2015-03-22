@@ -62,6 +62,11 @@ public class PatientDoctorAddReviewResultServlet extends HttpServlet {
         getServletContext().getRequestDispatcher(url).forward(request, response);
     }
     
+    private static java.sql.Date getCurrentDate() {
+        java.util.Date today = new java.util.Date();
+        return new java.sql.Date(today.getTime());
+    }
+    
     public static boolean addReview(Connection con, HttpServletRequest request)
         throws ClassNotFoundException, SQLException 
     {
@@ -69,11 +74,12 @@ public class PatientDoctorAddReviewResultServlet extends HttpServlet {
         String msg = "Review added successfuly!";
         try
         {
-            String query = "insert into Review " +
-                "(review_date,rating,text,pat_alias,doc_alias) " +
-                "values (CURDATE(), ? , ? , ? , ? )";
+            String query = "INSERT INTO Review (review_date,rating,text,pat_alias,doc_alias) VALUES (?,?,?,?,?);";
             
             stmt = con.prepareStatement(query); 
+            
+            stmt.setDate(1, getCurrentDate());
+            
             if(request.getParameter("rating").isEmpty())
             {
                 msg = "Please add a rating";
@@ -85,18 +91,18 @@ public class PatientDoctorAddReviewResultServlet extends HttpServlet {
                 msg = "Rating is out of range";
                 throw new Exception();
             }
-            stmt.setInt(1, rating);
+            stmt.setInt(2, rating);
               
             if(request.getParameter("text").isEmpty())
             {
                 msg = "Please add a message to the review";
                 throw new Exception();
             }
-            stmt.setString(2, request.getParameter("text"));
+            stmt.setString(3, request.getParameter("text"));
             
             // CURRENTLY DOESNT WORK, NEED SESSION
             //stmt.setString(3, request.getParameter("patient_alias"));
-            stmt.setString(3, "pat_anne");
+            stmt.setString(4, "pat_anne");
             // FIX
             
             if(request.getParameter("doctor_ID").isEmpty())
@@ -104,9 +110,9 @@ public class PatientDoctorAddReviewResultServlet extends HttpServlet {
                 msg = "Something went wrong";
                 throw new Exception();
             }
-            stmt.setString(4, request.getParameter("doctor_ID"));
+            stmt.setString(5, request.getParameter("doctor_ID"));
             
-            stmt.executeUpdate(query);
+            stmt.executeUpdate();
         }
         catch(Exception e)
         {
