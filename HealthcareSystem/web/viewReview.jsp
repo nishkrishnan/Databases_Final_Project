@@ -12,7 +12,8 @@
         <title>View Doctor Review</title>
     </head>
      
-        <% if ((session.getAttribute("doctor") == null) || (session.getAttribute("doctor") == "")) { %>
+        <% if ((session.getAttribute("patient") == null) || (session.getAttribute("patient") == "") &&
+                (session.getAttribute("doctor") == null) || (session.getAttribute("doctor") == "")) { %>
         You are not logged in<br/>
         <a href="index.jsp">Please Login</a>
         <% } else { %>
@@ -20,6 +21,7 @@
             <% Review currentReview = (Review)request.getAttribute("CurrentReview");
                Review lastReview = (Review)request.getAttribute("LastReview");
                Review nextReview = (Review)request.getAttribute("NextReview");
+               String docAlias = (String)request.getAttribute("doc");
             %>
 
             <h1>Review </h1>
@@ -35,7 +37,7 @@
                 </tr>
                 <tr>
                     <% if (lastReview != null) { %>
-                        <td><a href="ViewReviewServlet?ID=<%= lastReview.review_ID%>">Previous Review</a></td>
+                        <td><a href="ViewReviewServlet?ID=<%= lastReview.review_ID%>&doc=<%=docAlias%>">Previous Review</a></td>
                     <% } else { %>
                         <td>N/A</td>
                     <% } %>
@@ -45,7 +47,7 @@
                     <td><%=currentReview.text%></td>
                     <td><%=currentReview.patient_alias%></td>
                      <% if (nextReview != null) { %>
-                        <td><a href="ViewReviewServlet?ID=<%= nextReview.review_ID%>">Next Review</a></td>
+                        <td><a href="ViewReviewServlet?ID=<%= nextReview.review_ID%>&doc=<%=docAlias%>">Next Review</a></td>
                     <% } else { %>
                         <td>N/A</td>
                     <% } %>

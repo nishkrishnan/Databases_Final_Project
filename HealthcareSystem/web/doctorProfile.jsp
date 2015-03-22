@@ -125,7 +125,7 @@
         %>
             <tr>
                 <td><%= review.review_date.toString()%></td>
-                <td><a href="ViewReviewServlet?ID=<%= review.review_ID%>">View Review</a></td>
+                <td><a href="ViewReviewServlet?ID=<%= review.review_ID%>&doc=<%=doctorData.alias%>">View Review</a></td>
             </tr>
         <%
             }

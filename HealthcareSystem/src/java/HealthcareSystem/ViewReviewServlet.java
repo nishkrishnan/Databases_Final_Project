@@ -43,8 +43,12 @@ public class ViewReviewServlet extends HttpServlet {
             {
                 throw new Exception();
             }
+            if (request.getParameter("doc").isEmpty()) {
+                throw new Exception();
+                
+            }
             int reviewID = Integer.parseInt(request.getParameter("ID"));
-            String docAlias = String.valueOf(request.getSession().getAttribute("doctor"));
+            String docAlias = request.getParameter("doc");
             
             InitialContext cxt = new InitialContext();
             if (cxt == null) 
@@ -78,6 +82,7 @@ public class ViewReviewServlet extends HttpServlet {
                             
                 }
             }
+            request.setAttribute("doc", docAlias);
             con.close();
 
         } catch (Exception e) {
