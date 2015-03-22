@@ -81,7 +81,7 @@
             </table> 
                     
                 <br><br>
-            <a href="patientMain.jsp">Go Back</a>
+        <input action="action" type="button" value="Go Back" onclick="window.history.go(-1); return false;" />
         
         <!--(accessible from view doctor profile). For one review display the name of the
         doctor and the review details: date, star rating, and free-form comments. There should also be links to
