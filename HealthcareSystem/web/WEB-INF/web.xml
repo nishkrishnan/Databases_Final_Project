@@ -40,6 +40,10 @@
         <servlet-name>ViewFriendRequestsServlet</servlet-name>
         <servlet-class>HealthcareSystem.ViewFriendRequestsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewReviewServlet</servlet-name>
+        <servlet-class>HealthcareSystem.ViewReviewServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PatientLoginServlet</servlet-name>
         <url-pattern>/PatientLoginServlet</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>ViewFriendRequestsServlet</servlet-name>
         <url-pattern>/ViewFriendRequestsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewReviewServlet</servlet-name>
+        <url-pattern>/ViewReviewServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

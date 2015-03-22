@@ -32,6 +32,10 @@
         profile information including e-mail address. The list of reviews for this doctor should also be displayed
         with links to individual reviews, as in the interface for patients.>
         
+        
+        <a href="LogoutServlet">Logout</a>
+        <br><br>
+        
         <% Doctor doctorData = (Doctor)request.getAttribute("doctorData"); %>
         
         <table>
@@ -121,7 +125,7 @@
         %>
             <tr>
                 <td><%= review.review_date.toString()%></td>
-                <td><a href="PatientDoctorReviewServlet?ID=<%= review.review_ID%>">View Review</a></td>
+                <td><a href="ViewReviewServlet?ID=<%= review.review_ID%>">View Review</a></td>
             </tr>
         <%
             }
