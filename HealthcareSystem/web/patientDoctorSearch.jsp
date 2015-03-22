@@ -73,7 +73,7 @@
         </select><br/>
         Years Licensed: <input name="years_licensed" type="number"><br/>
         Avg. Star Rating Greater Than: <input name="star_rating" type="number" step="any" min="0"><br/>
-        Reviewed by friend: <input name="reviewed_by_friend " type="checkbox"><br/>
+        Reviewed by friend: <input name="reviewed_by_friend" type="checkbox"><br/>
         Review Keyword: <input type="text" name="reviewKeyword" size="20"><br/>
         
         <p> 
