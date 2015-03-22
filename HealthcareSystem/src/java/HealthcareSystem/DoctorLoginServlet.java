@@ -50,7 +50,7 @@ public class DoctorLoginServlet extends HttpServlet {
             }
             Connection con = ds.getConnection();
 
-            boolean success = isLoginSuccessful(con, request);
+            boolean success = isLoginSuccessful(con, request, false);
             
             con.close();
             
