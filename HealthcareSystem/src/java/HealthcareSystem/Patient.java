@@ -15,4 +15,5 @@ public class Patient extends Person{
     public int numReviews;
     public Date dateOfLastReview;
     public boolean isFriend;
+    public boolean requestedToBeFriend;
 }

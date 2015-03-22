@@ -347,7 +347,7 @@ public class CommonQueries {
             return ret;
         }
     }
-    public static ArrayList<String> getRequestedFriends(Connection con) 
+    public static ArrayList<String> getRequestedFriends(Connection con, HttpServletRequest request) 
             throws ClassNotFoundException, SQLException, Exception  {
         
         Statement stmt = null;
@@ -359,7 +359,9 @@ public class CommonQueries {
                     + "(select distinct a.pat_alias, a.pat_added_alias from Friend a \n" 
                     + "where pat_added_alias not in (select b.pat_alias from Friend b "
                     + "where b.pat_added_alias = a.pat_alias)) as c \n"
-                    + "where pat_alias = ");
+                    + "where pat_alias = '");
+            String patientName = String.valueOf(request.getSession().getAttribute("patient"));
+            sb.append(patientName).append("'");
             
             ResultSet resultSet = stmt.executeQuery(sb.toString());
             
@@ -379,10 +381,10 @@ public class CommonQueries {
             return ret;
         }
     }
-    public static boolean requestedToBeFriend(Connection con, String alias)
+    public static boolean requestedToBeFriend(Connection con, String alias, HttpServletRequest request)
             throws ClassNotFoundException, SQLException, Exception {
         ArrayList<String> requested;
-        requested = getRequestedFriends(con);
+        requested = getRequestedFriends(con, request);
         
         for (String patient: requested) {
             if (patient.equalsIgnoreCase(alias)) {
@@ -417,10 +419,15 @@ public class CommonQueries {
             while (resultSet.next()) {
                 Patient p = new Patient();
                 
+                // This ensures that current user does not appear on the list.
+                if (resultSet.getString("pat_alias").equalsIgnoreCase(String.valueOf
+                   (request.getSession().getAttribute("patient")))) {
+                    continue;
+                }
                 p.alias = resultSet.getString("pat_alias");
                 p.province = resultSet.getString("province");
                 p.city = resultSet.getString("city");
-                //Add requested as friend as patient field
+                p.requestedToBeFriend = requestedToBeFriend(con, p.alias, request);
                 p.isFriend = isFriend(con,p.alias, request);
                 p.numReviews = resultSet.getInt("num_reviews");
                 p.dateOfLastReview = resultSet.getDate("last_review");
