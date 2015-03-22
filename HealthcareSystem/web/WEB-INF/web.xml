@@ -32,6 +32,13 @@
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>HealthcareSystem.LogoutServlet</servlet-class>
     </servlet>
+<<<<<<< HEAD
+=======
+    <servlet>
+        <servlet-name>DoctorProfileServlet</servlet-name>
+        <servlet-class>HealthcareSystem.DoctorProfileServlet</servlet-class>
+    </servlet>
+>>>>>>> 993bcdf1c769e1b633802eaede0a2af78fa40f9f
     <servlet-mapping>
         <servlet-name>PatientLoginServlet</servlet-name>
         <url-pattern>/PatientLoginServlet</url-pattern>
@@ -64,6 +71,13 @@
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
+<<<<<<< HEAD
+=======
+    <servlet-mapping>
+        <servlet-name>DoctorProfileServlet</servlet-name>
+        <url-pattern>/DoctorProfileServlet</url-pattern>
+    </servlet-mapping>
+>>>>>>> 993bcdf1c769e1b633802eaede0a2af78fa40f9f
     <session-config>
         <session-timeout>
             30
