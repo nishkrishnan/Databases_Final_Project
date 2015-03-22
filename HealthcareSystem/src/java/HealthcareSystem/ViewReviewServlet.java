@@ -33,7 +33,7 @@ public class ViewReviewServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String url = "/patientDoctorAddReviewResult.jsp";
+        String url = "/viewReview.jsp";
         
         try 
         {
