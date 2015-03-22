@@ -4,6 +4,9 @@
     Author     : mfarova
 --%>
 
+<%@page import="HealthcareSystem.Doctor"%>
+<%@page import="HealthcareSystem.WorkAddress"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,9 +16,57 @@
     </head>
     <body>
         <h1>View Doctor Profile</h1>
-        (accessible from doctor search). For one doctor display profile information
-(name, gender, work address(es), area(s) of specialization, and number of years licensed), the average
-star rating, the number of reviews, as well as a list of links to the individual reviews in reverse
-chronological order (i.e., most recent reviews on top). There should also be a link to write a new review.
+        <!(accessible from doctor search). For one doctor display profile information
+        (name, gender, work address(es), area(s) of specialization, and number of years licensed), the average
+        star rating, the number of reviews, as well as a list of links to the individual reviews in reverse
+        chronological order (i.e., most recent reviews on top). There should also be a link to write a new review.>
+        
+        
+        <% Doctor doctorData = (Doctor)request.getAttribute("doctorData"); %>
+        
+        <table>
+            <tr>
+                <td>Name</td>
+                <td>Gender</td>
+                <td>Average Rating</td>
+                <td># Reviews</td>
+            </tr>
+            <tr>
+                <td><%= doctorData.firstName%> <%= doctorData.lastName%></td>
+                <td><%= doctorData.gender%></td>
+                <td><%= doctorData.star_rating%></td>
+                <td><%= doctorData.num_reviews%></td>
+            </tr>
+        </table>
+        
+        
+        <table>
+            <tr>
+                <td>Street</td>
+                <td>City</td>
+                <td>Province</td>
+                <td>Postal Code</td>
+            </tr>
+        
+        <%! ArrayList<WorkAddress> workAddresses;%>
+        <%
+            workAddresses = (ArrayList<WorkAddress>) request.getAttribute("workAddresses");
+            for (WorkAddress address : workAddresses) 
+            {
+        %>
+            <tr>
+                <td><%= address.street_num%> <%= address.street_name%></td>
+                <td><%= address.city%></td>
+                <td><%= address.province%></td>
+                <td><%= address.postal_code%></td>
+            </tr>
+        <%
+            }
+        %>
+        
+        </table>
+        
+        
+        
     </body>
 </html>

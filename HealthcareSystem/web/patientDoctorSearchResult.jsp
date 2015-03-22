@@ -20,6 +20,15 @@
         gender, average star rating, and number of reviews. For each doctor there should also be a link to view
         the doctor’s profile.>
         
+        <table>
+            <tr>
+                <td>Name</td>
+                <td>Gender</td>
+                <td>Average Rating</td>
+                <td># Reviews</td>
+                <td>Link</td>
+            </tr>
+        
         
         <%! ArrayList<Doctor> doctors;%>
         <%
@@ -27,12 +36,17 @@
             for (Doctor doctor : doctors) 
             {
         %>
-        
-        <%= doctor.firstName%> <%= doctor.lastName%><br>
-        
+            <tr>
+                <td><%= doctor.firstName%> <%= doctor.lastName%></td>
+                <td><%= doctor.gender%></td>
+                <td><%= doctor.star_rating%></td>
+                <td><%= doctor.num_reviews%></td>
+                <td><a href="patientDoctorProfile?ID=<%= doctor.alias%>">Profile</a></td>
+            </tr>
         <%
             }
         %>
         
+        </table>
     </body>
 </html>

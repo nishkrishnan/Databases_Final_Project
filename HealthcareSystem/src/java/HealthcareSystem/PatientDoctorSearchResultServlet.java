@@ -84,6 +84,7 @@ public class PatientDoctorSearchResultServlet extends HttpServlet {
             while (resultSet.next()) {
                 Doctor doctor = new Doctor();
                 
+                doctor.alias = resultSet.getString("doc_alias");
                 doctor.firstName = resultSet.getString("first_name");
                 doctor.lastName = resultSet.getString("last_name");
                 doctor.gender = resultSet.getString("gender");
@@ -114,6 +115,7 @@ public class PatientDoctorSearchResultServlet extends HttpServlet {
         boolean addReviewKeyword = false;
         
         String query = "Select \n" +
+            "Doctor.doc_alias, \n" +
             "first_name, \n" +
             "last_name,  \n" +
             "gender, \n" +

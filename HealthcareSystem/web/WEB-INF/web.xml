@@ -20,6 +20,10 @@
         <servlet-name>PatientSearchServlet</servlet-name>
         <servlet-class>HealthcareSystem.PatientSearchServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>patientDoctorProfile</servlet-name>
+        <servlet-class>HealthcareSystem.patientDoctorProfile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PatientLoginServlet</servlet-name>
         <url-pattern>/PatientLoginServlet</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>PatientSearchServlet</servlet-name>
         <url-pattern>/PatientSearchServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>patientDoctorProfile</servlet-name>
+        <url-pattern>/patientDoctorProfile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
