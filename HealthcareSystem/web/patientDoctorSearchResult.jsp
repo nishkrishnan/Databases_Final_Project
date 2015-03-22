@@ -10,10 +10,12 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="style.css" /> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Patient Doctor Search Results</title>
     </head>
     <body> 
+    <center>
         <% if ((session.getAttribute("patient") == null) || (session.getAttribute("patient") == "")) { %>
         You are not logged in as a Patient<br/>
         <a href="patientLogin.jsp">Please Login</a>
@@ -27,11 +29,11 @@
         
         <table>
             <tr>
-                <td>Name</td>
-                <td>Gender</td>
-                <td>Average Rating</td>
-                <td># Reviews</td>
-                <td>Link</td>
+                <td><b>Name</b></td>
+                <td><b>Gender</b></td>
+                <td><b>Average Rating</b></td>
+                <td><b># Reviews</b></td>
+                <td><b>Link</b></td>
             </tr>
         
         
@@ -43,16 +45,22 @@
         %>
             <tr>
                 <td><%= doctor.firstName%> <%= doctor.lastName%></td>
-                <td><%= doctor.gender%></td>
-                <td><%= doctor.star_rating%></td>
-                <td><%= doctor.num_reviews%></td>
-                <td><a href="PatientDoctorProfileServlet?ID=<%= doctor.alias%>">Profile</a></td>
+                <td><center><%= doctor.gender%></center></td>
+                <td><center><%= doctor.star_rating%></center></td>
+                <td><center><%= doctor.num_reviews%></center></td>
+                <td><center><a href="PatientDoctorProfileServlet?ID=<%= doctor.alias%>">Profile</a></center></td>
             </tr>
         <%
             }
         %>
         
-        <% } %>
+        
+        
         </table>
+        <br><br><a href="PatientDoctorSearchServlet">Go Back To Search</a>
+        
+        <% } %>
+        
+        </center>
     </body>
 </html>

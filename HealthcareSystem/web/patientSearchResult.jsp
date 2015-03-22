@@ -9,49 +9,62 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="style.css" /> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Patient Search Results</title>
     </head>
     <body> 
+    <center>
         <% if ((session.getAttribute("patient") == null) || (session.getAttribute("patient") == "")) { %>
         You are not logged in as a Patient<br/>
         <a href="patientLogin.jsp">Please Login</a>
         <% } else { %>
         
         
+            <h1>Patient Search</h1>
+        
             <%! ArrayList<Patient> patientList;%>
             <% patientList = (ArrayList<Patient>) request.getAttribute("PatientList");%>
 
-            <table><tr><th>"Patient Alias"</th><th>"Province"</th><th>"City"</th><th>"Number of Reviews"</th><th>"Last Review"</th><th>Add Friend</th></tr>
+            <table><tr><th>Patient Alias</th><th>Province</th><th>City</th><th>Number of Reviews</th><th>Last Review</th><th>Add Friend</th></tr>
                 <%
                     for (Patient p : patientList) {
                 %>
                 <tr>
-                    <td><%= p.alias%></td>
-                    <td><%= p.province%></td>
-                    <td><%= p.city%></td>
-                    <td><%= p.numReviews%></td>
+                    <td><center><%= p.alias%></center></td>
+                    <td><center><%= p.province%></center></td>
+                    <td><center><%= p.city%></center></td>
+                    <td><center><%= p.numReviews%></center></td>
+                    <td>
+                    <center>
                     <% if (p.dateOfLastReview == null) {%>
-                        <td>N/A</td>
+                        N/A
                     <% } else { %>
-                        <td><%= p.dateOfLastReview%></td>
+                        <%= p.dateOfLastReview%>
                     <% } %>
+                    </center>
+                    </td>
+                    <td>
+                    <center>
                     <% if(p.isFriend) {%>
-                        <td>FRIEND</td>
+                        Friend
                     <% } else if (p.requestedToBeFriend) {%>
-                        <td>FRIEND REQUEST SENT </td>
+                        Request Sent
                     <% } else {%>
-                        <td><a href="AddFriendServlet?alias=<%=p.alias%>">Add Friend</a></td>
+                        <a href="AddFriendServlet?alias=<%=p.alias%>">Add Friend</a>
                      <% } %>
-
+                     </center>
+                     </td>
+                     
                 </tr>
                 <%
                     }
                 %>
             </table>
 
-            <a href="patientSearch.jsp">return to main page</a>
+            <br><br><a href="patientSearch.jsp">Go Back</a>
 
         <% } %>
+        </center>
     </body>
 </html>

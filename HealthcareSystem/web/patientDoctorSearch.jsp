@@ -11,10 +11,12 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="style.css" /> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Doctor Search</title>
     </head>
     <body>
+    <center>
         <% if ((session.getAttribute("patient") == null) || (session.getAttribute("patient") == "")) { %>
         You are not logged in as a Patient<br/>
         <a href="patientLogin.jsp">Please Login</a>
@@ -33,19 +35,17 @@
     e) Find Waterloo cardiologists whose review includes the keyword “great”.
     >
     
-    <br><br>
-    
     <form method="post" action="PatientDoctorSearchResultServlet">
         <p>
-        First Name: <input type="text" name="firstName" size="20" autofocus><br/>
-        Last Name: <input type="text" name="lastName" size="20"><br/>
-        Gender: 
+        First Name: <br/><input type="text" name="firstName" size="20" autofocus><br/>
+        Last Name: <br/><input type="text" name="lastName" size="20"><br/>
+        Gender: <br/>
         <select name="gender">
             <option value="none">---</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
         </select><br/>
-        Address: 
+        Address: <br/>
         <select name="work_ID">
             <option value="none">---</option>
             <%! ArrayList<WorkAddress> workAddresses;%>
@@ -58,7 +58,7 @@
                 }
             %>
         </select><br/>
-        Specialization: 
+        Specialization:<br/> 
         <select name="spec_ID">
             <option value="none">---</option>
             <%! ArrayList<Specialization> specializations;%>
@@ -71,16 +71,19 @@
                 }
             %>
         </select><br/>
-        Years Licensed: <input name="years_licensed" type="number"><br/>
-        Avg. Star Rating Greater Than: <input name="star_rating" type="number" step="any" min="0"><br/>
+        Years Licensed: <br/><input name="years_licensed" type="number"><br/>
+        Avg. Star Rating Greater Than: <br/><input name="star_rating" type="number" step="any" min="0"><br/>
+        Review Keyword: <br/><input type="text" name="reviewKeyword" size="20"><br/>
         Reviewed by friend: <input name="reviewed_by_friend" type="checkbox"><br/>
-        Review Keyword: <input type="text" name="reviewKeyword" size="20"><br/>
         
         <p> 
         <input type="submit">
     </form>
     
+    <a href="patientMain.jsp">Go Back</a>
+        
         <% } %>
+        </center>
     </body>
     
 </html>

@@ -8,10 +8,12 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="style.css" /> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Patient Main Page</title>
     </head>
     <body> 
+    <center>
         <% if ((session.getAttribute("patient") == null) || (session.getAttribute("patient") == "")) { %>
         You are not logged in as a Patient<br/>
         <a href="patientLogin.jsp">Please Login</a>
@@ -19,7 +21,7 @@
         
         <h1>Patient Main Page</h1>
         
-        <h1>Please select one of the following:</h1>
+        <h2>Please select one of the following:</h2>
         <ul>      
         <li><a href="patientSearch.jsp">Patient Search</a></li>
         <li><a href="ViewFriendRequestsServlet">View Friend Requests</a></li>
@@ -28,5 +30,6 @@
         </ul>
     
         <% } %>
+        </center>
     </body>
 </html>

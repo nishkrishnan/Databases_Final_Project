@@ -9,10 +9,12 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="style.css" /> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>View Friend Requests</title>
     </head>
-    <body> 
+    <body>
+    <center>
         <% if ((session.getAttribute("patient") == null) || (session.getAttribute("patient") == "")) { %>
         You are not logged in as a Patient<br/>
         <a href="patientLogin.jsp">Please Login</a>
@@ -45,6 +47,9 @@ shown, as well as a link to add that patient as a friend, thus confirming the fr
     %>
     
 
+    <br><br><a href="patientMain.jsp">Go Back</a>
+        
         <% } %>
+        </center>
     </body>
 </html>

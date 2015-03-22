@@ -8,10 +8,13 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="style.css" /> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Doctor Login</title>
     </head>
     <body>
+        
+        <center>
         <h1>Doctor Login</h1>
         
         <%
@@ -19,19 +22,23 @@
         {
             String msg = (String) request.getAttribute("msg");
         %>
-            <font size="3" color="red">
+            <font class="error">
             <%=msg%>
             </font>
         <%  
         }
         %>
         
-        <form method="post" action="DoctorLoginServlet">
-            <p>
-            ID: <input type="text" name="username" size="20" autofocus><br/>
-            Password: <input type="password" name="password" size="20"><br/>
-            <p> 
-            <input type="submit">
-        </form>
+            <form method="post" action="DoctorLoginServlet">
+                <p>
+                ID: <br> <input type="text" name="username" size="20" autofocus><br/>
+                Password: <br> <input type="password" name="password" size="20"><br/>
+                <p> 
+                <input type="submit">
+            </form>
+        
+            <a href="index.jsp">Go Back</a>
+        
+        </center>
     </body>
 </html>
