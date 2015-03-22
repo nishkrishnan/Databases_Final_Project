@@ -104,7 +104,7 @@
             </tr>
         
             
-        <a href="PatientDoctorAddReview.jsp">Add Review</a>
+        <a href="patientDoctorAddReview.jsp?ID=<%= doctorData.alias%>">Add Review</a>
         <%! ArrayList<Review> reviews;%>
         <%
             reviews = (ArrayList<Review>) request.getAttribute("reviews");

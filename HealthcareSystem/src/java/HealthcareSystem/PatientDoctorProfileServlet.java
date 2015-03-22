@@ -88,6 +88,7 @@ public class PatientDoctorProfileServlet extends HttpServlet {
             Doctor doctor = new Doctor();
             if(resultSet.next())
             {
+                doctor.alias = resultSet.getString("doc_alias");
                 doctor.firstName = resultSet.getString("first_name");
                 doctor.lastName = resultSet.getString("last_name");
                 doctor.gender = resultSet.getString("gender");
@@ -195,6 +196,7 @@ public class PatientDoctorProfileServlet extends HttpServlet {
     public static PreparedStatement generateDoctorQuery(Connection con, HttpServletRequest request)
     {
         String query = "Select " +
+            "doc_alias, " +
             "first_name, " +
             "last_name,  " +
             "gender, " +
