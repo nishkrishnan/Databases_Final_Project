@@ -10,6 +10,7 @@ import static HealthcareSystem.CommonQueries.getReviews;
 import static HealthcareSystem.CommonQueries.getSpecializations;
 import static HealthcareSystem.CommonQueries.getWorkAddresses;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.ArrayList;
 import javax.naming.Context;
@@ -24,7 +25,7 @@ import javax.sql.DataSource;
  *
  * @author Mickey
  */
-public class PatientDoctorProfileServlet extends HttpServlet {
+public class DoctorProfileServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,7 +39,7 @@ public class PatientDoctorProfileServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String url = "/patientDoctorProfile.jsp";
+        String url = "/doctorProfile.jsp";
         try 
         {
             InitialContext cxt = new InitialContext();
@@ -53,7 +54,7 @@ public class PatientDoctorProfileServlet extends HttpServlet {
             }
             Connection con = ds.getConnection();
 
-            String docID = request.getParameter("ID");
+            String docID = String.valueOf(request.getSession().getAttribute("doctor"));
             
             Doctor doctorData = getDoctorData(con, docID);
             request.setAttribute("doctorData", doctorData);

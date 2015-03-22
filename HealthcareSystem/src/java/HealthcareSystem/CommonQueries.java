@@ -18,6 +18,224 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class CommonQueries {
     
+    
+     public static Doctor getDoctorData(Connection con, String docID)
+            throws ClassNotFoundException, SQLException {
+       
+        PreparedStatement stmt = null;
+        ArrayList<WorkAddress> ret = null;
+        try {
+            
+            stmt = generateDoctorQuery(con, docID);
+            ResultSet resultSet = stmt.executeQuery();
+            
+            Doctor doctor = new Doctor();
+            if(resultSet.next())
+            {
+                doctor.alias = resultSet.getString("doc_alias");
+                doctor.firstName = resultSet.getString("first_name");
+                doctor.lastName = resultSet.getString("last_name");
+                doctor.gender = resultSet.getString("gender");
+                doctor.email = resultSet.getString("email");
+                doctor.star_rating = resultSet.getInt("avg_rating");
+                doctor.num_reviews = resultSet.getInt("num_reviews");
+                doctor.years_licensed = resultSet.getInt("years_licensed");
+            }
+            
+            return doctor;
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+    }
+
+     public static ArrayList<Specialization> getSpecializations(Connection con, String docID)
+            throws ClassNotFoundException, SQLException {
+       
+        PreparedStatement stmt = null;
+        ArrayList<Specialization> ret = null;
+        try {
+            
+            stmt = generateSpecializationQuery(con, docID);
+            ResultSet resultSet = stmt.executeQuery();
+            
+            ret = new ArrayList<Specialization>();
+            while (resultSet.next()) {
+                Specialization spec = new Specialization();
+                
+                spec.spec_name = resultSet.getString("spec_name");
+                        
+                ret.add(spec);
+            }
+            return ret;
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+    }
+
+     public static ArrayList<Review> getReviews(Connection con, String docID)
+            throws ClassNotFoundException, SQLException {
+       
+        PreparedStatement stmt = null;
+        ArrayList<Review> ret = null;
+        try {
+            
+            stmt = generateReviewsQuery(con, docID);
+            ResultSet resultSet = stmt.executeQuery();
+            
+            ret = new ArrayList<Review>();
+            while (resultSet.next()) {
+                Review review = new Review();
+                
+                review.review_ID = resultSet.getInt("review_ID");
+                review.review_date = resultSet.getDate("review_date");
+                review.rating = resultSet.getInt("rating");
+                review.text = resultSet.getString("text");
+                review.patient_alias = resultSet.getString("pat_alias");
+                        
+                ret.add(review);
+            }
+            return ret;
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+    }
+     
+     public static ArrayList<WorkAddress> getWorkAddresses(Connection con, String docID)
+            throws ClassNotFoundException, SQLException {
+       
+        PreparedStatement stmt = null;
+        ArrayList<WorkAddress> ret = null;
+        try {
+            
+            stmt = generateWorkAddressQuery(con, docID);
+            ResultSet resultSet = stmt.executeQuery();
+            
+            ret = new ArrayList<WorkAddress>();
+            while (resultSet.next()) {
+                WorkAddress address = new WorkAddress();
+                
+                address.street_num = resultSet.getInt("street_num");
+                address.street_name = resultSet.getString("street_name");
+                address.city = resultSet.getString("city");
+                address.province = resultSet.getString("province");
+                address.postal_code = resultSet.getString("postal_code");
+                        
+                ret.add(address);
+            }
+            return ret;
+        }
+        finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+    }
+     
+     
+    public static PreparedStatement generateDoctorQuery(Connection con, String doctorID)
+    {
+        String query = "Select " +
+            "doc_alias, " +
+            "first_name, " +
+            "last_name,  " +
+            "gender, " +
+            "email, " +
+            "(YEAR(CURDATE()) - license_year) as years_licensed, " +
+            "(Select avg(rating) from Review Where Review.doc_alias = Doctor.doc_alias) as avg_rating, " +
+            "(Select count(*) from Review Where Review.doc_alias = Doctor.doc_alias) as num_reviews " +
+            "from Doctor Inner join Person " +
+            "on Doctor.doc_alias = Person.person_alias " +
+            "Where Doctor.doc_alias = ?";
+        
+        PreparedStatement stmt = null;
+        try
+        {
+            stmt = con.prepareStatement(query); 
+            stmt.setString(1, doctorID);
+        }
+        catch(Exception e)
+        {
+        }
+        
+        return stmt;
+    }
+    
+    public static PreparedStatement generateWorkAddressQuery(Connection con, String docID)
+    {
+        String query = "Select \n" +
+            "street_num, \n" +
+            "street_name, \n" +
+            "city, \n" +
+            "province, \n" +
+            "postal_code \n" +
+            "from doctorAddress inner join workAddress \n" +
+            "on doctorAddress.work_ID = workAddress.work_ID \n" +
+            "Where doc_alias = ?";
+        
+        PreparedStatement stmt = null;
+        try
+        {
+            stmt = con.prepareStatement(query); 
+            stmt.setString(1, docID);
+        }
+        catch(Exception e)
+        {
+        }
+        
+        return stmt;
+    }
+     
+    public static PreparedStatement generateSpecializationQuery(Connection con, String docID)
+    {
+        String query = "Select spec_name \n" +
+            "from doctorSpec inner join Specialization \n" +
+            "on doctorSpec.spec_ID = Specialization.spec_ID \n" +
+            "Where doc_alias = ?";
+        
+        PreparedStatement stmt = null;
+        try
+        {
+            stmt = con.prepareStatement(query); 
+            stmt.setString(1, docID);
+        }
+        catch(Exception e)
+        {
+        }
+        
+        return stmt;
+    }
+     
+    public static PreparedStatement generateReviewsQuery(Connection con, String docID)
+    {
+        String query = "Select \n" +
+            "review_ID, " + 
+            "review_date, \n" +
+            "rating, \n" +
+            "text, \n" +
+            "pat_alias \n" +
+            "from Review \n" +
+            "where doc_alias = ? \n" +
+            "order by review_date desc";
+        
+        PreparedStatement stmt = null;
+        try
+        {
+            stmt = con.prepareStatement(query); 
+            stmt.setString(1, docID);
+        }
+        catch(Exception e)
+        {
+        }
+        
+        return stmt;
+    }
+     
      public static ArrayList<WorkAddress> getWorkAddresses(Connection con)
             throws ClassNotFoundException, SQLException {
        

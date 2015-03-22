@@ -7,9 +7,6 @@ package HealthcareSystem;
 import static HealthcareSystem.CommonQueries.isLoginSuccessful;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.ServletException;
@@ -38,7 +35,7 @@ public class DoctorLoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String url = "/doctorProfile.jsp";
+        String url = "/DoctorProfileServlet";
         try 
         {
             InitialContext cxt = new InitialContext();
