@@ -4,6 +4,7 @@
     Author     : mfarova
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,9 +19,9 @@
         <% } else { %>
         
         <h1>View Friend Requests</h1>
-        A patient views a list of other patients who have added them as a
+        <!A patient views a list of other patients who have added them as a
 friend, but whom this patient has not yet added as a friend. For each patient the alias and e-mail are
-shown, as well as a link to add that patient as a friend, thus confirming the friendship.
+shown, as well as a link to add that patient as a friend, thus confirming the friendship.!>
 
         <%! ArrayList<String> friendrequests;%>
     <%
