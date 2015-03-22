@@ -22,7 +22,7 @@
             <%! ArrayList<Patient> patientList;%>
             <% patientList = (ArrayList<Patient>) request.getAttribute("PatientList");%>
 
-            <table border=1><tr><th>"Patient Alias"</th><th>"Province"</th><th>"City"</th><th>"Number of Reviews"</th><th>"Last Review"</th><th>Add Friend</th></tr>
+            <table><tr><th>"Patient Alias"</th><th>"Province"</th><th>"City"</th><th>"Number of Reviews"</th><th>"Last Review"</th><th>Add Friend</th></tr>
                 <%
                     for (Patient p : patientList) {
                 %>

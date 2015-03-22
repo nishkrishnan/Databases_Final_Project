@@ -7,6 +7,7 @@ package HealthcareSystem;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.ServletException;
@@ -34,6 +35,7 @@ public class ViewReviewServlet extends HttpServlet {
             throws ServletException, IOException {
         
         String url = "/viewReview.jsp";
+        ArrayList<Review> reviews;
         
         try 
         {
@@ -42,6 +44,7 @@ public class ViewReviewServlet extends HttpServlet {
                 throw new Exception();
             }
             int reviewID = Integer.parseInt(request.getParameter("ID"));
+            String docAlias = String.valueOf(request.getSession().getAttribute("doctor"));
             
             InitialContext cxt = new InitialContext();
             if (cxt == null) 
@@ -55,10 +58,26 @@ public class ViewReviewServlet extends HttpServlet {
             }
             Connection con = ds.getConnection();
             
+            reviews = CommonQueries.getReviews(con,docAlias);
             
-            
-            
-
+            for (int i = 0; i < reviews.size(); i++) {
+                if (reviewID == reviews.get(i).review_ID) {
+                    request.setAttribute("CurrentReview", reviews.get(i));
+                    if (i > 0) {
+                        request.setAttribute("LastReview", reviews.get(i - 1));
+                    }
+                    else {
+                        request.setAttribute("LastReview", null);
+                    }
+                    if (i < (reviews.size() - 1)) {
+                        request.setAttribute("NextReview", reviews.get(i + 1));
+                    }
+                    else {
+                        request.setAttribute("NextReview", null);
+                    }
+                            
+                }
+            }
             con.close();
 
         } catch (Exception e) {
