@@ -100,10 +100,8 @@ public class PatientDoctorAddReviewResultServlet extends HttpServlet {
             }
             stmt.setString(3, request.getParameter("text"));
             
-            // CURRENTLY DOESNT WORK, NEED SESSION
-            //stmt.setString(3, request.getParameter("patient_alias"));
-            stmt.setString(4, "pat_anne");
-            // FIX
+            String patientName = String.valueOf(request.getSession().getAttribute("patient"));
+            stmt.setString(3, request.getParameter(patientName));
             
             if(request.getParameter("doctor_ID").isEmpty())
             {

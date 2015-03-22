@@ -71,7 +71,7 @@ public class PatientSearchServlet extends HttpServlet {
             Statement stmt = null;
         ArrayList<Patient> patList = new ArrayList<Patient>();
         
-        patList = CommonQueries.getPatients(con, pat, query.toString());
+        patList = CommonQueries.getPatients(con, pat, query.toString(), request);
         request.setAttribute("PatientList", patList);
         
         con.close();

@@ -57,7 +57,7 @@ public class AddFriendServlet extends HttpServlet {
             }
             Connection con = ds.getConnection();
 
-            CommonQueries.AddFriend(con, alias);
+            CommonQueries.AddFriend(con, alias, request);
             
             con.close();
             
