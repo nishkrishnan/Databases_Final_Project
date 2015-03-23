@@ -88,6 +88,7 @@ public class PatientSearchServlet extends HttpServlet {
         }
         else {
             url = "/patientSearch.jsp";
+            request.setAttribute("msg", "Please enter a value in at least one field before searching");
         }
         
         

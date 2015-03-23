@@ -20,6 +20,17 @@
         <% } else { %>
         
         <h1>Patient Friend Search</h1>
+        <%
+        if(request.getAttribute("msg") != null)
+        {
+            String msg = (String) request.getAttribute("msg");
+        %>
+            <font class="error">
+            <%=msg%>
+            </font>
+        <%  
+        }
+        %>
         <form method="post" action="PatientSearchServlet">
             <p>
             ID: <br/><input type="text" name="patientID" size="20" autofocus><br/>
