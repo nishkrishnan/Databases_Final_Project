@@ -149,9 +149,9 @@ public class PatientDoctorSearchResultServlet extends HttpServlet {
             
             query += "gender = "; 
             if(request.getParameter("gender").equalsIgnoreCase("male")){
-                query += "'M'"; 
+                query += "'male'"; 
             } else {
-                query += "'F'"; 
+                query += "'female'"; 
             }
             allEmpty = false;
         }
@@ -188,7 +188,7 @@ public class PatientDoctorSearchResultServlet extends HttpServlet {
                 {
                     query += " AND ";
                 }
-                query += "(Select avg(rating) from Review Where Review.doc_alias = Doctor.doc_alias) > ? ";
+                query += "(Select avg(rating) from Review Where Review.doc_alias = Doctor.doc_alias) >= ? ";
                 allEmpty = false;
                 addStarRating = true;
             }
