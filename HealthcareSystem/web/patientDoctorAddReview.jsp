@@ -27,13 +27,28 @@
         
         <% String docID = (String) request.getParameter("ID"); %>
         
+        <%
+        if(request.getAttribute("msg") != null)
+        {
+            String msg = (String) request.getAttribute("msg");
+        %>
+            <font class="error">
+            <%=msg%>
+            </font>
+        <%  
+        }
+        %>
+        <h2>Review for <%=docID%></h2>
         <form method="post" action="PatientDoctorAddReviewResultServlet">
-            <input type="hidden" name="doctor_ID" value="<%=docID%>"><br/><br>
+            <input height="0" type="hidden" name="doctor_ID" value="<%=docID%>"><br/><br>
             Rating (0-5): <br><input type="numeric" min="0" max="5" step="0.5" name="rating" size="5" autofocus><br/>
             Text: <br><input type="text" name="text" size="20"><br/>
             <input type="submit">
         </form>
-        
+            
+        <br><br>
+        <a href="PatientDoctorProfileServlet?ID=<%=docID%>">Go Back</a>
+            
         <% } %>
         </center>
     </body>

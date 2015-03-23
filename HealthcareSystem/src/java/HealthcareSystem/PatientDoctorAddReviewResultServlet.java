@@ -35,7 +35,7 @@ public class PatientDoctorAddReviewResultServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String url = "/patientDoctorAddReviewResult.jsp";
+        String url = "/patientDoctorAddReview.jsp";
         
         try 
         {
@@ -51,11 +51,20 @@ public class PatientDoctorAddReviewResultServlet extends HttpServlet {
             }
             Connection con = ds.getConnection();
 
-            addReview(con, request);
+            boolean success = addReview(con, request);
 
             con.close();
+            
+            if(success)
+            {
+                url = "/PatientDoctorProfileServlet";
+            }
+                
+            url += "?ID=" + request.getParameter("doctor_ID");      
 
-        } catch (Exception e) {
+        } 
+        catch (Exception e) 
+        {
             url = "/error.jsp";
         }
         
@@ -71,7 +80,7 @@ public class PatientDoctorAddReviewResultServlet extends HttpServlet {
         throws ClassNotFoundException, SQLException 
     {
         PreparedStatement stmt = null;
-        String msg = "Review added successfuly!";
+        String msg = "Your inputs are not valid. Please try again.";
         try
         {
             String query = "INSERT INTO Review (review_date,rating,text,pat_alias,doc_alias) VALUES (?,?,?,?,?);";
