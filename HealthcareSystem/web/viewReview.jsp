@@ -14,8 +14,17 @@
     </head>
     <body>
         <center>
-        <% if ((session.getAttribute("patient") == null) || (session.getAttribute("patient") == "") &&
-                (session.getAttribute("doctor") == null) || (session.getAttribute("doctor") == "")) { %>
+        <% 
+            boolean patientNotLoggedIn = false;
+            boolean doctorNotLoggedIn  = false;
+            
+            if ((session.getAttribute("patient")== null) || (session.getAttribute("patient") == "")) {
+                patientNotLoggedIn = true;
+            }
+            if ((session.getAttribute("doctor")== null) || (session.getAttribute("doctor") == "")) {
+                doctorNotLoggedIn = true;
+            }
+            if (patientNotLoggedIn && doctorNotLoggedIn) { %>
         You are not logged in<br/>
         <a href="index.jsp">Please Login</a>
         <% } else { %>
@@ -81,7 +90,18 @@
             </table> 
                     
                 <br><br>
-        <input action="action" type="button" value="Go Back" onclick="window.history.go(-1); return false;" />
+                
+        <% if (patientNotLoggedIn) {%>
+            <form method="post" action="DoctorProfileServlet">
+                <input type="submit" value="Back to Profile">
+                <!--input action="action" type="button" value="Go Back"/-->
+            </form>
+        <% } else { %>
+            <form method="post" action="PatientDoctorProfileServlet?ID=<%=docAlias%>">
+                <input type="submit" value="Back to Profile">
+                <!--input action="action" type="button" value="Go Back"/-->
+            </form>
+        <% }%>
         
         <!--(accessible from view doctor profile). For one review display the name of the
         doctor and the review details: date, star rating, and free-form comments. There should also be links to
