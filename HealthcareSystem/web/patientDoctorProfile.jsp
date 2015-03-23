@@ -121,8 +121,7 @@
         </table>
         
         <br><br>
-        
-        <br><br><a href="patientMain.jsp">Go Back to Main</a>
+        <a href="patientMain.jsp">Go Back to Main</a>
         
         <% } %>
         </center>
