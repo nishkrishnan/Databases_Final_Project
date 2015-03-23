@@ -11,13 +11,11 @@ and open the template in the editor.
 html {
     display: table;
     margin: auto;
-    color: #66FFFF;
 }
 
 body {
     display: table-cell;
     vertical-align: middle;
-    background-color: yellow;
 }
 
 ul {
@@ -50,7 +48,6 @@ input, select {
 
 h1 {
     font-size: 36px;
-    color: #66FFFF;
     line-height: 40px;
 }
 
