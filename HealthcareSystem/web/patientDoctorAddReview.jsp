@@ -27,6 +27,7 @@
         
         <% String docID = (String) request.getParameter("ID"); %>
         
+        <h2>Review for <%=docID%></h2>
         <%
         if(request.getAttribute("msg") != null)
         {
@@ -38,7 +39,6 @@
         <%  
         }
         %>
-        <h2>Review for <%=docID%></h2>
         <form method="post" action="PatientDoctorAddReviewResultServlet">
             <input height="0" type="hidden" name="doctor_ID" value="<%=docID%>"><br/><br>
             Rating (0-5): <br><input type="numeric" min="0" max="5" step="0.5" name="rating" size="5" autofocus><br/>
