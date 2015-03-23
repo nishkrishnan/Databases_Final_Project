@@ -71,8 +71,15 @@ public class ViewFriendRequestsServlet extends HttpServlet {
         Statement stmt = null;
         ArrayList<String> ret = null;
         try {
+            String patientName = String.valueOf(request.getSession().getAttribute("patient"));
             stmt = con.createStatement();
-            ResultSet resultSet = stmt.executeQuery("select pat_alias, email from (select distinct a.pat_alias, a.pat_added_alias from Friend a where pat_added_alias not in (select b.pat_alias from Friend b where b.pat_added_alias = a.pat_alias)) as c inner join Person on pat_alias = Person.person_alias where pat_added_alias = 'pat_kate'");
+            StringBuilder query = new StringBuilder();
+            query.append("select pat_alias, email from (select distinct a.pat_alias, a.pat_added_alias from Friend a where pat_added_alias not in (select b.pat_alias from Friend b where b.pat_added_alias = a.pat_alias)) as c inner join Person on pat_alias = Person.person_alias where pat_added_alias = '");
+            query.append(patientName);
+            query.append("'");
+            
+            ResultSet resultSet = stmt.executeQuery(query.toString());
+            
             ret = new ArrayList<String>();
             while (resultSet.next()) {
                 ret.add(resultSet.getString("pat_alias"));

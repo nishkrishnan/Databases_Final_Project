@@ -7,15 +7,25 @@ package HealthcareSystem;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 /**
  *
- * @author tylerhart
+ * @author Nish
  */
+@WebServlet(name = "AcceptFriendRequestServlet", urlPatterns = {"/AcceptFriendRequestServlet"})
 public class AcceptFriendRequestServlet extends HttpServlet {
 
     /**
@@ -28,20 +38,35 @@ public class AcceptFriendRequestServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AcceptFriendRequestServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AcceptFriendRequestServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String alias = request.getParameter("ID");
+        
+        String url = "/ViewFriendRequestsServlet";
+        try 
+        {
+            InitialContext cxt = new InitialContext();
+            if (cxt == null) 
+            {
+                throw new RuntimeException("Unable to create naming context!");
+            }
+            Context dbContext = (Context) cxt.lookup("java:comp/env");
+            DataSource ds = (DataSource) dbContext.lookup("jdbc/myDatasource");
+            if (ds == null) {
+                throw new RuntimeException("Data source not found!");
+            }
+            Connection con = ds.getConnection();
+
+            CommonQueries.AddFriend(con, alias, request);
+            
+            con.close();
+            
         }
+        catch(SQLException e) {
+            url = "/error.jsp";
+        }
+        
+        getServletContext().getRequestDispatcher(url).forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,8 +80,12 @@ public class AcceptFriendRequestServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException{
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(AddFriendServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -70,7 +99,11 @@ public class AcceptFriendRequestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(AddFriendServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
