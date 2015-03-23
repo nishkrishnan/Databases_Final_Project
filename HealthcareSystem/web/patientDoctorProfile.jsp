@@ -122,7 +122,7 @@
         
         <br><br>
         
-            <a href="patientMain.jsp">Go Back</a>
+        <input action="action" type="button" value="Go Back" onclick="window.history.go(-1); return false;" />
         
         <% } %>
         </center>

@@ -21,7 +21,7 @@
         <% } else { %>
         
         
-            <h1>Patient Search</h1>
+            <h1>Patient Friend Search</h1>
         
             <%! ArrayList<Patient> patientList;%>
             <% patientList = (ArrayList<Patient>) request.getAttribute("PatientList");%>
