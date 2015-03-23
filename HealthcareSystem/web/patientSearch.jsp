@@ -19,7 +19,7 @@
         <a href="patientLogin.jsp">Please Login</a>
         <% } else { %>
         
-        <h1>Patient Search</h1>
+        <h1>Patient Friend Search</h1>
         <form method="post" action="PatientSearchServlet">
             <p>
             ID: <br/><input type="text" name="patientID" size="20" autofocus><br/>

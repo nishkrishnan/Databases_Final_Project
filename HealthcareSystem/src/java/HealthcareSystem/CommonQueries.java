@@ -448,7 +448,7 @@ public class CommonQueries {
          
      }
      
-    public static boolean isLoginSuccessful(Connection con, HttpServletRequest request)
+    public static boolean isLoginSuccessful(Connection con, HttpServletRequest request, boolean isPatient)
         throws ClassNotFoundException, SQLException 
     {
         Boolean success = true;
@@ -461,8 +461,18 @@ public class CommonQueries {
                 "SELECT * " +
                 "FROM Person " +
                 "WHERE person_alias = ? " +
-                "AND password = SHA2(CONCAT((SELECT salt FROM Person WHERE person_alias = ?), ?), 224) " +
-                ") " +
+                "AND password = SHA2(CONCAT((SELECT salt FROM Person WHERE person_alias = ?), ?), 224) ";
+                    
+            if(isPatient)
+            {
+                query += "AND EXISTS(SELECT * FROM Patient WHERE pat_alias = ?) ";
+            }
+            else
+            {
+                query += "AND EXISTS(SELECT * FROM Doctor WHERE doc_alias = ?) ";
+            }
+            
+            query += ") " +
                 "THEN 1 " +
                 "ELSE 0 " +
                 "END AS Success";
@@ -483,6 +493,8 @@ public class CommonQueries {
                 throw new Exception();
             }
             stmt.setString(3, request.getParameter("password"));
+            
+            stmt.setString(4, request.getParameter("username"));
             
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()) {

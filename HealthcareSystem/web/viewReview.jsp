@@ -36,6 +36,7 @@
             %>
 
             <h1>Review </h1>
+            <h2>Doctor: <%=docAlias%></h2>
             <table width="500px">
                 <tr>
                     <th>Review ID</th>
