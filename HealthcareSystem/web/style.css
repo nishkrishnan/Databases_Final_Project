@@ -16,6 +16,10 @@ html {
 body {
     display: table-cell;
     vertical-align: middle;
+    background-image: url('images/thumbs.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: left top; 
 }
 
 ul {
